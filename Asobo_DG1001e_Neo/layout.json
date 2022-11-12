@@ -1,0 +1,129 @@
+{
+  "content": [
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/configpanel.js",
+      "size": 14697,
+      "date": 133115068150765163
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/interface.js",
+      "size": 11335,
+      "date": 133091959421116731
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/mapConfig.json",
+      "size": 3409,
+      "date": 133076394168562429
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/nav.html",
+      "size": 44182,
+      "date": 133126653643480461
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/nav.js",
+      "size": 57808,
+      "date": 133115085876956917
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/navmap.js",
+      "size": 18813,
+      "date": 133076394168859265
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/navmap_topomap.js",
+      "size": 24176,
+      "date": 133115067917374732
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/navpanel.js",
+      "size": 7373,
+      "date": 133096356696764374
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/soarnet.js",
+      "size": 318879,
+      "date": 133105094468155290
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/soarnet_class.js",
+      "size": 10372,
+      "date": 133122345470816299
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/touchcloud.png",
+      "size": 49493,
+      "date": 133076394169151251
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/b21_includes/geo.js",
+      "size": 5135,
+      "date": 133076394169286560
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/b21_includes/geo_test.html",
+      "size": 234,
+      "date": 133076394169384879
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/b21_soaring_engine/b21_settings.js",
+      "size": 1469,
+      "date": 133076394169601999
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/b21_soaring_engine/b21_soaring_engine.html",
+      "size": 661,
+      "date": 133076394169712295
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/b21_soaring_engine/b21_soaring_engine.js",
+      "size": 63624,
+      "date": 133115091673067597
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/b21_soaring_engine/README.md",
+      "size": 1212,
+      "date": 133076394169517229
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/css/bignumbers.css",
+      "size": 780,
+      "date": 133091838570881220
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/css/nav.css",
+      "size": 24311,
+      "date": 133115086124850348
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/css/soarnet.css",
+      "size": 2980,
+      "date": 133117034804573425
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/css/task-page.css",
+      "size": 4573,
+      "date": 133088675166686677
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/thermalling_display/thermalling_display.css",
+      "size": 2894,
+      "date": 133085648793405199
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/thermalling_display/thermalling_display.html",
+      "size": 6418,
+      "date": 132994449587609552
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/DG1001/nav/thermalling_display/thermalling_display.js",
+      "size": 25943,
+      "date": 133088699656656962
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_DG1001E_Neo/panel/PANEL.CFG",
+      "size": 1493,
+      "date": 133126651578999314
+    }
+  ]
+}

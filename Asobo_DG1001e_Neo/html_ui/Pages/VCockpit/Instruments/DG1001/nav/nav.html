@@ -1,0 +1,777 @@
+<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/nav.css?ae" />
+<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/bignumbers.css?aa" />
+<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/task-page.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""/>
+<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/thermalling_display/thermalling_display.css?a" />
+<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/soarnet.css" />
+
+<script type="text/html" id="lxn">
+    <div id="Mainframe" class="map_northup">
+		<div id="battery_required">
+			<div class="loader"><div class="bar"></div></div>
+			<div id="Map" width="1000" height="1000"></div>
+
+			
+			<div class="speedgauge">
+				<div class="speedband">
+					<div class="speedladder kmh">
+						<div class="flap_indicator">
+							<div class="flap_0">-3</div>
+							<div class="flap_1">-2</div>
+							<div class="flap_2">-1</div>
+							<div class="flap_3">0</div>
+							<div class="flap_4">T1</div>
+							<div class="flap_5">T2</div>
+						</div>
+						<div class="stfmarker"></div></div>
+					<div class="speedladder kts">
+						<div class="flap_indicator">
+							<div class="flap_0">-3</div>
+							<div class="flap_1">-2</div>
+							<div class="flap_2">-1</div>
+							<div class="flap_3">0</div>
+							<div class="flap_4">T1</div>
+							<div class="flap_5">T2</div>
+						</div>
+						<div class="stfmarker"></div>
+					</div>
+					<div class="currentspeed"><span>0</span>
+						<div class="currentspeed_arrow"></div>
+					</div>
+				</div>
+
+				<div class="stf data-cell current">
+					<span class="label">STF</span>
+					<div class="value">
+						<span class="livedata" data-value="stf" showunit="no"></span>
+					</div>
+				</div>
+
+				<div class="mccready data-cell current">
+					<span class="label">MC</span>
+					<div class="value">
+						<span class="livedata" data-value="mccready" showunit="no"></span>
+					</div>
+					<a href="#" class="datacell-clickspot"></a>
+					<div class="mcbuttons">
+						<button class="button inc">+</button>
+						<button class="button dec">-</button>
+					</div>
+				</div>
+			</div>
+	
+			<div id="hawk" class="active current">
+				<div class="arrow" id="arrow_avg">
+					<svg id="triangle" viewBox="0 0 100 100">
+						<polygon points="50 100, 100 15, 0 15"/>
+					</svg>
+				</div>
+				<div class="arrow" id="arrow_current">
+					<svg id="triangle" viewBox="0 0 100 100">
+						<polygon points="50 100, 100 15, 0 15"/>
+					</svg>
+				</div>
+				<div id="number"><span class="values"><span class="livedata" data-value="wind_direction" showunit="no"></span> / <span class="livedata" data-value="wind_spd"></span></span><span class="label"></span></div>
+				<div id="vertical_indicator">
+					<div id="hawkbar">
+						<svg id="triangle" viewBox="0 0 100 100">
+							<polygon points="50 100, 100 15, 0 15"/>
+						</svg>
+						<span class="value livedata" data-value="wind_vertical" showunit="no"></span>
+					</div>
+				</div>
+			</div>
+
+			<div id="coursepointer">
+				<div id="pointerbar" class="isStraight">
+					<svg id="triangle" viewBox="0 0 100 100">
+						<polygon points="50 100, 100 15, 0 15"/>
+					</svg>
+					<span class="arrows"></span>
+				</div>
+				<div id="pointerstraight">|</div>
+			</div>
+
+			<div id="glidericon">
+                <div id="ac_hdg"></div>
+                <div id="ac_trk"></div>
+                <svg id="symbol" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M247.989 307.923l.88.88-118.47 118.42c-22.74 22.79-76.09 54.47-76.09 54.47a17.21 17.21 0 0 1-22.18-26.16l181.72-181.71zm231.86-275.77a17.21 17.21 0 0 0-24.33 0l-181.72 181.72 34.1 34.1.88.88 118.42-118.43c22.74-22.74 54.47-76.09 54.47-76.09a17.21 17.21 0 0 0-1.82-22.18zm-52.44 319.24a32.78 32.78 0 0 0-23.25 9.62l-43.17 43.17a32.89 32.89 0 0 0 0 46.51l6 6 89.69-89.68-6-6a32.78 32.78 0 0 0-23.27-9.62zm-46.8 10.55l-18.69 18.69c-40.87-40.64-64.22-62-102.66-84l-39.27-39.32c-64-64-65.14-86.41-57.12-94.44 1.91-1.91 4.76-3.29 9-3.29 12.64 0 37.47 12.43 85.46 60.41l39.29 39.29c21.95 38.47 43.37 61.8 83.99 102.66zm-156.89-162.82c-34.3-29.84-49.85-33.11-53.79-29.17-2.7 2.7-1.91 8.38 2.33 16.9 4.91 9.84 13.88 22.21 26.79 36.94z"/></svg>
+            </div>
+
+
+
+
+			<div id="panelframe">
+				<div class="panel">
+					<div class="pageheader">
+						<div class="title">Apt: <span class="livedata airportname" data-value="sel_apt_name" showunit="no"></span> (<span class="livedata" data-value="sel_apt_icao" showunit="no"></span>) </div><div class="time current"><span class="livedata" data-value="localtime" showunit="no"></span></div>
+					</div>
+					<div class="pageframe">
+						<div class="page">
+							<div class="datacells_top">
+								<div id="cell_0_0_1" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"sel_apt_bearing"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_2" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"sel_apt_dist"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_3" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"sel_apt_ete"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_4" class="datacell" data-default='{"back":"#000000","backneg":"#ff0000","text":"#ffffff","value":"sel_apt_arr_msl"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_5" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_6" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_7" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_8" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+							</div>
+							<div class="datacells_bottom">
+								<div id="cell_0_0_9" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_10" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_11" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_12" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_13" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"alt"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_14" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"alt_gnd"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_15" class="datacell" data-default='{"back":"#66EEFF","backneg":"#66EEFF","text":"#000000","value":"oat"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_0_0_16" class="datacell" data-default='{"back":"#ff6600","backneg":"#0d8b3c","text":"#000000","value":"ballast"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+							</div>
+	
+						</div>
+						<div class="page">
+							<div class="content airportinfo">
+								<div class="icao"> <span class="livedata" data-value="sel_apt_icao" showunit="no"></span></div>
+								<h2><span class="livedata airportname" data-value="sel_apt_name" showunit="no"></span></h2>
+								<div class="elevation">Elevation: <span class="livedata" data-value="sel_apt_alt"></span></div>
+								<div class="distancbearing"> <span class="livedata" data-value="sel_apt_bearing"></span> @  <span class="livedata" data-value="sel_apt_dist"></span></div>
+								<br><br>
+								<h4>Runways:</h4>
+								<div class="runways"></div>
+							</div>
+							
+						</div>
+						<div class="page">
+							<div class="content">
+								<div class="airportlist hasScrollbars">
+									<ul id="nearestairports">
+																				
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="pageheader">
+						<div class="title">WPT: <span class="livedata wp_name" data-value="wp_name" showunit="no"></span> (<span class="livedata" data-value="wp_alt"></span>)</div>	
+						<div class="time"><div id="wpselect"><a href="#" id="wp_back"><</a><a href="#" id="wp_next">></a></div><span class="livedata" data-value="localtime" showunit="no"></span></div>
+					</div>
+					<div class="pageframe">
+						<div class="page">
+							<div class="datacells_top">
+								<div id="cell_1_0_1" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"wp_bearing"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_2" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"wp_dist"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_3" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"wp_ete"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_4" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"wp_arr_msl"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_5" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_6" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_7" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_8" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+	
+							</div>
+	
+	
+							<div class="datacells_bottom">
+								<div id="cell_1_0_9" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_10" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_11" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_12" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_13" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"alt"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_14" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"hdg"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_15" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"gndspd"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_0_16" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"alt_gnd"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+							</div>
+						</div>
+						
+						<div class="page">
+							
+							<!-- ------------------------------- -->
+							<!-- THERMALLING DISPLAY             -->
+							<!-- ------------------------------- -->
+							<div id="thermalling_display">
+								<div id="thermalling_display_left">
+									<div id="thermalling_display_wind">
+										<div id="thermalling_display_wind_speed"><span class="livedata" data-value="wind_spd" showunit="no"></span></div>
+										<div id="thermalling_display_wind_value">
+											<!-- HERE WE DRAW WIND ARROW TO ROTATE IN JS -->
+											<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+											<g id="thermalling_display_wind_line" transform="rotate(180,50,50)">
+												<path d="M50,90 l-15,-30 h11 v-50 h8 v50 h11 z" stroke="#fff" fill="#fff"/>
+											</g>
+											</svg>
+										</div>
+										<div id="thermalling_display_wind_units"></div>
+									</div>
+									<div id="thermalling_display_l_top">
+										<div class="thermalling_display_l_heading">CLIMB</div>
+										<div id="thermalling_display_l_top_value" class="thermalling_display_l_value">X.X</div>
+									</div>
+									<div id="thermalling_display_l_middle">
+										<div class="thermalling_display_l_heading">TRU AVG</div>
+										<div id="thermalling_display_l_middle_value" class="thermalling_display_l_value">- -</div>
+									</div>
+									<div id="thermalling_display_l_bottom">
+										<div class="thermalling_display_l_heading">MC</div>
+										<div id="thermalling_display_l_bottom_value" class="thermalling_display_l_value"><span class="livedata" data-value="mccready" showunit="no"></span></div>
+										<div id="thermalling_display_l_bottom_units" class="thermalling_display_l_units"></div>
+									</div>
+								</div>
+								<div id="thermalling_display_main">
+									<svg width="600" height="600" id="thermalling_display_blobs_svg" xmlns="http://www.w3.org/2000/svg">
+										<g id="thermalling_display_wp_bearing" transform="rotate(15,300,300)">
+											<path d="M300,300 l0,-350" stroke="#FF9D1E" fill="#FF9D1E" stroke-width="2"/>
+										</g>
+									</svg>
+									<div id="thermalling_display_north_up">&#8607;<br/>N</div>
+									<div id="thermalling_display_glider">
+										<!-- HERE WE DRAW GLIDE TO ROTATE IN JS -->
+										<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+											<g id="thermalling_display_glider_svg" transform="rotate(30,300,300)">
+												  <path d="M300,275 l4,16 h26 l28,4 v4 h-54 l-2,32 h6 v6 h-16 v-6 h6 l-2,-32 h-54 v-4 l28,-4 h26 z" stroke="#000" fill="#000"/>
+											</g>
+										</svg>
+									</div>
+								</div>
+								<div id="thermalling_display_bottom">
+									<!-- Maccready line -->
+									<svg id="thermalling_display_mc_line_svg" width="867" height="300" xmlns="http://www.w3.org/2000/svg">
+										<g id="thermalling_display_bottom_mc" transform="translate(0,0)">
+											<text x="5" y="2">MC</text>
+											<path d="M35,0 h867" stroke="#000" fill="#000" stroke-width="2" stroke-dasharray="10 5"/>
+										</g>
+									</svg>
+									<!-- horizontal zero axis -->
+									<svg id="thermalling_display_0_line_svg" width="867" height="300" xmlns="http://www.w3.org/2000/svg">
+										
+										<path d="M20,150 h875" stroke="#000" fill="#000"/>
+									</svg>
+									<!-- CLIMB STRENGTH GRAPH -->
+									<svg class="thermalling_display_abs" width="867" height="300" xmlns="http://www.w3.org/2000/svg">
+										<path id="thermalling_display_graph_svg" stroke="#000" stroke-width="2" fill-opacity="0" />
+									</svg>
+									<!-- THERMALS BARS GRAPH -->
+									<svg class="thermalling_display_abs" width="867" height="300" xmlns="http://www.w3.org/2000/svg">
+										<path id="thermalling_display_bars_svg" stroke="green" stroke-width="3" fill="green" />
+									</svg>
+									<!-- bars | graph vertical dividing line -->
+									<svg id="thermalling_display_bars_graph_line_svg" width="867" height="300" xmlns="http://www.w3.org/2000/svg">
+										<path d="M433,0 v300" stroke="#000" fill="#000"/>
+									</svg>
+								</div>
+							</div> <!-- end thermalling_display -->	
+
+
+							<div class="datacells_bottom">
+								<div id="cell_1_1_9" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_1_10" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_1_11" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_1_12" class="datacell"><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_1_13" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"alt"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_1_14" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"alt_gnd"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_1_15" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"wp_arr_msl"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+								<div id="cell_1_1_16" class="datacell" data-default='{"back":"#000000","backneg":"#000000","text":"#ffffff","value":"wp_arr_agl"}' data-userconfig=''><span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div></div>
+							</div>
+
+						</div>
+						
+					</div>
+				</div>
+				<div class="panel">
+					<div class="pageheader">
+						<div class="title">Task:</div>
+						<div class="time"><span class="livedata" data-value="localtime" showunit="no"></span></div>
+					</div>
+					<div class="pageframe">
+						<div class="page">
+							
+
+							<div id="tasklist" class="task_not_started hasScrollbars">
+								<header>
+                                <div class="headline">
+                                    <span class="header_prestart">Task not started</span>
+                                    <span class="header_running">Task running</span>
+                                    <span class="header_finished">Task finished</span>
+                                    <span class="header_failed">Task failed</span>
+                                </div>
+                                <div class="task-state">
+                                    <div class="task-timer"><div class="shine"></div>
+                                        <span class="label">Time</span>
+                                        <div class="value">
+                                            <span class="number">00:00:00</span>
+                                        </div>
+                                    </div>
+                                    <div class="task-totaldistance"><div class="shine"></div>
+                                        <span class="label">Dist</span>
+                                        <div class="value">
+                                            <span class="number">315</span><span class="unit">km</span>
+                                        </div></div>
+                                    <div class="task-distanceleft"><div class="shine"></div>
+                                        <span class="label">To Go</span>
+                                        <div class="value">
+                                            <span class="number">188</span><span class="unit">km</span>
+                                        </div></div>
+                                    <div class="task-arrivalheight"><div class="shine"></div>
+                                        <span class="label">Finish Alt.</span>
+                                        <div class="value">
+                                            <span class="number"></span><span class="unit">m</span>
+                                        </div>
+                                    </div>
+                                    <div class="task-average"><div class="shine"></div>
+                                        <span class="label">Avg.</span>
+                                        <div class="value">
+                                            <span class="number"></span><span class="unit">kmh</span>
+                                        </div>
+                                    </div>
+                                    <div class="task-failures"></div>
+                                </div>
+                            </header>
+			    
+			    <div class="task-alerts">
+                                Attention: Slew activated!
+                            </div>
+			    
+			    <div id="wp-template" class="task-waypoint">
+                                <div class="header">
+                                    <div class="wp-name"></div>
+                                    <div class="badge wp-ok">OK</div>
+                                    <div class="badge wp-nok">FAIL</div>
+                                </div>
+
+                                <div class="wp-values">
+                                    <div class="wp-main">
+                                        <div class="wp-data dist"><div class="shine"></div>
+                                            <span class="label">Dist</span>
+                                            <div class="value">
+                                                <span class="number">0</span><span class="unit"></span>
+                                            </div>
+                                        </div>
+					<div class="wp-data ete"><div class="shine"></div>
+                                            <span class="label">ETE</span>
+                                            <div class="value">
+                                                <span class="number"></span><span class="unit"></span>
+                                            </div>
+                                        </div>
+                                        <div class="wp-data arr_agl"><div class="shine"></div>
+                                            <span class="label">Arr (WP)</span>
+                                            <div class="value">
+                                                <span class="number"></span><span class="unit"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="wp-details">
+                                        <div class="wp-data bearing"><div class="shine"></div>
+                                            <span class="label">Brg</span>
+                                            <div class="value">
+                                                <span class="number"></span><span class="unit">deg</span>
+                                            </div>
+                                        </div>
+                                        <div class="wp-data wind"><div class="shine"></div>
+                                            <span class="label">Wind</span>
+                                            <div class="value">
+                                                <span class="number"></span><span class="unit"></span>
+                                            </div>
+                                        </div>
+                                        <div class="wp-data arr_msl"><div class="shine"></div>
+                                            <span class="label">Arr (MSL)</span>
+                                            <div class="value">
+                                                <span class="number"></span><span class="unit"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="wp-minmax">
+                                    <span class="wp-min"></span>
+                                    <span class="wp-max"></span>
+                                </div>
+
+                                <div class="click-indicator"><span>▼</span></div>
+                                <a href="#" class="wp-link"></a>
+                            </div>
+	
+								
+	
+							</div>
+
+						</div>
+
+						<div class="page">
+
+							<div class="content mp notConnected noEvent">
+								
+								<p id="mp_info"></p>
+								<table id="userlist">
+									<thead>
+										<th>P.</th><th>User</th><th>Alt</th><th>Avg</th><th class='alignright'>T./Dst</th>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+
+								<div class="configpanel_buttons">
+									<a href="#" id="leave_event" class="servicelink">Leave</a>
+								</div>
+								
+								<div id="events">
+									<p class="eventheader">Click to join or create an event</p>
+									<ul id="eventlist">
+										
+									</ul>
+									<a href="#" id="addEventLink">Add new flight</a>
+									<form id="addEvent" class="off">
+										<input type="text" name="eventtitle" id="eventtitle" placeholder="Flight title">
+										<div class="timeinput">
+											<label>Task start UTC:</label><input type="text" name="utchours" id="utchours">:<input type="text" name="utcmin" id="utcmin">
+										</div>
+										<input type="submit" value="Create Flight">
+									</form>
+
+									<div class="configpanel_buttons">
+										<a href="#" id="disconnect" class="servicelink">Disconnect</a>
+									</div>
+								</div>
+
+								<div id="mp_mainswitch">
+									<p class="eventheader">Multiplayer Event Engine:</p>
+									<form id="mpform">
+										<input type="text" id="username" placeholder="Username">
+										<button id="mpformsubmit">CONNECT</button>
+									</form>
+									<p class="mainmessage"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel">
+					<div class="pageheader">
+						<div class="title">Kinetic Assistant</div>
+						<div class="time"><span class="livedata" data-value="localtime" showunit="no"></span></div>
+					</div>
+					<div class="pageframe">
+						<div class="page">
+							
+							<div class="content">
+							
+								<div id="ground_crew_menu">
+									<div id="ground_crew_winch">WINCH LAUNCH</div>
+									<div id="ground_crew_push">GROUND HANDLING</div>
+									<div id="ground_crew_tow">REQUEST TOWPLANE</div>
+									<div id="ground_crew_info">
+										1. Launch KineticAssistant<br />
+										2. Press CONNECT<br />
+										3. Minimize KineticAssistant
+									</div>
+									<div id="touching_cloud">
+									<img src="/Pages/VCockpit/Instruments/DG1001/nav/touchcloud.png"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+	
+				<div class="panel">
+					<div class="pageheader">
+						<div class="title">CONFIG:</div>
+						<div class="time"><span class="livedata" data-value="localtime" showunit="no"></span></div>
+					</div>
+					<div class="pageframe">
+						<div class="page">
+							<div id="systemconfig">
+								<div class="buttonwrapper">
+									<button class="lxconfigbtn" id="conf_wb" aria-controls="conf_panel_wb">Ballast</button>
+									<!-- button class="lxconfigbtn" id="conf_system" aria-controls="conf_panel_system">System Settings</button -->
+									<button class="lxconfigbtn" id="conf_units" aria-controls="conf_panel_units">Units</button>
+									<button class="lxconfigbtn" id="conf_interface" aria-controls="conf_panel_interface">Interface Options</button>
+									<!--
+									<button class="lxconfigbtn" id="conf_bugs" aria-controls="conf_panel_bugs">Bugs</button>
+									<button class="lxconfigbtn" id="conf_pc" aria-controls="conf_panel_pc">Polar Curve</button>
+									-->	
+								</div>
+								<div class="configpanel" id="conf_panel_wb" aria-controlledby="conf_wb">
+									<header>Water Ballast</header>
+									<div class="configpanel_content">
+										<div class="configpanel_content">
+											<div class="tanks">
+                                        		<div class="ballasttank left" data-tank="left"><div class="level"></div><div class="number"></div></div>
+                                        		<div class="centertankframe">
+                                            		<div class="ballasttank center" data-tank="center"><div class="level"></div><div class="number"></div></div>
+                                            		<div class="ballasttank back" data-tank="back"><div class="level"></div><div class="number"></div></div>
+                                        		</div>
+                                        		<div class="ballasttank right" data-tank="right"><div class="level"></div><div class="number"></div></div>
+                                    		</div>
+											<div id="ballastslider" class="rangeinput" data-min="0" data-max="100" data-value="100" data-callback="output"></div>
+											<div class="total">Total: <span class="livedata" data-value="ballast"></span></div>
+											<div id="singletanks"></div>
+										</div>
+									</div>
+									<div class="configpanel_buttons">
+										<a href="#" class="configpanel_close">CLOSE</a>
+									</div>
+								</div>
+								<div class="configpanel" id="conf_panel_system" aria-controlledby="conf_system">
+									<header>System Settings</header>
+									<div class="configpanel_content">
+																	
+
+									</div>
+									<div class="configpanel_buttons">
+										<a href="#" class="configpanel_close">CLOSE</a>
+									</div>
+								</div>
+								<div class="configpanel" id="conf_panel_units" aria-controlledby="conf_units"><header>Units</header>
+									<div class="configpanel_content">
+										<div class="quickselect">
+											<button class="lxsettingsbtn" id="conf_units_imperial">Imperial</button>
+											<button class="lxsettingsbtn" id="conf_units_metric">Metric</button>
+										</div>
+										<div id="unitdetailsetting">
+
+										</div>
+
+									</div>
+									<div class="configpanel_buttons">
+										<a href="#" class="configpanel_close">CLOSE</a>
+									</div>
+								</div>
+								<div class="configpanel" id="conf_panel_bugs" aria-controlledby="conf_bugs"><header>Bugs? Bugs!</header>
+									<div class="configpanel_content">
+										<p>IRL a factor for dirt and dead bugs on the wings. Can be used to adjust arrival height calculations. See README-file.</p>
+										<div style="text-align: center;"><input id="buginput" type="text" size="4" value="80" /></div>
+									</div>
+									<div class="configpanel_buttons">
+										<a href="#" class="configpanel_close">CLOSE</a>
+									</div>
+								</div>
+								<div class="configpanel" id="conf_panel_interface" aria-controlledby="conf_interface"><header>Interface Options</header>
+									<div class="configpanel_content">
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Improved Readability</div>
+												<div class="description">Use only six much larger datafields per page</div>
+											</div>
+											<div class="config_toggle" state="off" data-callback="toggleDatafieldSize">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Dotted Glider Path</div>
+											</div>
+											<div class="config_toggle" state="on" data-callback="toggleLiftdots">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Visual Stallwarning</div>
+											</div>
+											<div class="config_toggle" state="off" data-callback="toggleStallwarning">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Wind Indicator</div>
+											</div>
+											<div class="config_toggle" state="on" data-callback="toggleHawkdisplay">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Course Pointer Arrow</div>
+											</div>
+											<div class="config_toggle" state="off" data-callback="toggleCoursePointer">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Auto MacCready</div>
+												<div class="description">Update MC after every thermal</div>
+											</div>
+											<div class="config_toggle" state="off" data-callback="toggleAutoMC">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Aviation Map Layer</div>
+												<div class="description">Show airspaces, navaids and airports on map</div>
+											</div>
+											<div class="config_toggle" state="on" data-callback="toggleAipLayer">
+												<div class="handle"></div>
+											</div>
+										</div>
+									</div>
+									<div class="configpanel_buttons">
+										<a href="#" class="configpanel_close">CLOSE</a>
+									</div>
+								</div>
+								<div class="configpanel" id="conf_panel_pc" aria-controlledby="conf_pc"><header>Polar Curve</header>
+									<div class="configplanel_content">
+	
+									</div>
+									<div class="configpanel_buttons">
+										<a href="#" class="configpanel_close">CLOSE</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+			</div>
+
+
+			
+	
+			
+	
+			<a href="#" class="mapbutton" id="toggle_config">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					 viewBox="0 0 482.568 482.568" xml:space="preserve">
+					<g>
+						<path d="M116.993,203.218c13.4-1.8,26.8,2.8,36.3,12.3l24,24l22.7-22.6l-32.8-32.7c-5.1-5.1-5.1-13.4,0-18.5s13.4-5.1,18.5,0
+							l32.8,32.8l22.7-22.6l-24.1-24.1c-9.5-9.5-14.1-23-12.3-36.3c4-30.4-5.7-62.2-29-85.6c-23.8-23.8-56.4-33.4-87.3-28.8
+							c-4.9,0.7-6.9,6.8-3.4,10.3l30.9,30.9c14.7,14.7,14.7,38.5,0,53.1l-19,19c-14.7,14.7-38.5,14.7-53.1,0l-31-30.9
+							c-3.5-3.5-9.5-1.5-10.3,3.4c-4.6,30.9,5,63.5,28.8,87.3C54.793,197.518,86.593,207.218,116.993,203.218z"/>
+						<path d="M309.193,243.918l-22.7,22.6l134.8,134.8c5.1,5.1,5.1,13.4,0,18.5s-13.4,5.1-18.5,0l-134.8-134.8l-22.7,22.6l138.9,138.9
+							c17.6,17.6,46.1,17.5,63.7-0.1s17.6-46.1,0.1-63.7L309.193,243.918z"/>
+						<path d="M361.293,153.918h59.9l59.9-119.7l-29.9-29.9l-119.8,59.8v59.9l-162.8,162.3l-29.3-29.2l-118,118
+							c-24.6,24.6-24.6,64.4,0,89s64.4,24.6,89,0l118-118l-29.9-29.9L361.293,153.918z"/>
+					</g>
+				</svg>
+			</a>
+
+			<a href="#" class="mapbutton" id="map_orientation">
+				<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--gis" preserveAspectRatio="xMidYMid meet"><path d="M47.655 1.634l-35 95c-.828 2.24 1.659 4.255 3.68 2.98l33.667-21.228l33.666 21.228c2.02 1.271 4.503-.74 3.678-2.98l-35-95C51.907.514 51.163.006 50 .008c-1.163.001-1.99.65-2.345 1.626zm-.155 14.88v57.54L19.89 91.461z" fill="currentColor" fill-rule="evenodd"></path></svg>
+			</a>
+
+			<a href="#" class="mapbutton" id="map_zoomin">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				viewBox="0 0 60.364 60.364" xml:space="preserve">
+			   	<path d="M54.454,23.18l-18.609-0.002L35.844,5.91C35.845,2.646,33.198,0,29.934,0c-3.263,0-5.909,2.646-5.909,5.91v17.269
+				   L5.91,23.178C2.646,23.179,0,25.825,0,29.088c0.002,3.264,2.646,5.909,5.91,5.909h18.115v19.457c0,3.267,2.646,5.91,5.91,5.91
+				   c3.264,0,5.909-2.646,5.91-5.908V34.997h18.611c3.262,0,5.908-2.645,5.908-5.907C60.367,25.824,57.718,23.178,54.454,23.18z"/>
+		   		</svg>
+			</a>
+
+			<a href="#" class="mapbutton" id="map_zoomout">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					viewBox="0 0 42 42" xml:space="preserve">
+				<path d="M37.059,16H26H16H4.941C2.224,16,0,18.282,0,21s2.224,5,4.941,5H16h10h11.059C39.776,26,42,23.718,42,21
+					S39.776,16,37.059,16z"/>
+				</svg>
+			</a>
+	
+			<div id="cellconfigpanel">
+				<form id="cellconfig">
+					<div class="colorpicker">
+						<label for="cell-background">Background Color:</label>
+						<input type="text" id="cell-background" size="6">
+						<div class="colorpatches">
+							<div class="colorpatch" style="background-color: #000000;"></div>
+							<div class="colorpatch" style="background-color: #ff0000;"></div>
+							<div class="colorpatch" style="background-color: #0d8b3c;"></div>
+							<div class="colorpatch" style="background-color: #00d7fe;"></div>
+							<div class="colorpatch" style="background-color: #0E57AB;"></div>
+							<div class="colorpatch" style="background-color: #e7a508;"></div>
+							<div class="colorpatch" style="background-color: #ff22dd;"></div>
+							<div class="colorpatch" style="background-color: #ffffff;"></div>
+						</div>
+					</div>
+	
+					<div class="colorpicker">
+						<label for="cell-backgroundneg">Background (if negative):</label>
+						<input type="text" id="cell-backgroundneg" size="6">
+						<div class="colorpatches">
+							<div class="colorpatch" style="background-color: #000000;"></div>
+							<div class="colorpatch" style="background-color: #ff0000;"></div>
+							<div class="colorpatch" style="background-color: #0d8b3c;"></div>
+							<div class="colorpatch" style="background-color: #00d7fe;"></div>
+							<div class="colorpatch" style="background-color: #0E57AB;"></div>
+							<div class="colorpatch" style="background-color: #e7a508;"></div>
+							<div class="colorpatch" style="background-color: #ff22dd;"></div>
+							<div class="colorpatch" style="background-color: #ffffff;"></div>
+						</div>
+					</div>
+	
+					<div class="colorpicker">
+						<label for="cell-text">Text Color:</label>
+						<input type="text" id="cell-text" size="6">
+						<div class="colorpatches">
+							<div class="colorpatch" style="background-color: #000000;"></div>
+							<div class="colorpatch" style="background-color: #ff0000;"></div>
+							<div class="colorpatch" style="background-color: #0d8b3c;"></div>
+							<div class="colorpatch" style="background-color: #00d7fe;"></div>
+							<div class="colorpatch" style="background-color: #0E57AB;"></div>
+							<div class="colorpatch" style="background-color: #e7a508;"></div>
+							<div class="colorpatch" style="background-color: #ff22dd;"></div>
+							<div class="colorpatch" style="background-color: #ffffff;"></div>
+						</div>
+					</div>
+						
+					<label for="cell-value">Value to display</label>
+					<select id="cell-value" size="5">
+						<option value="none">No Display</option>
+					</select>
+	
+					<br />
+						<div id="forceunit">
+							<label for="forceunit-none"><input type="radio" name="unitselect" value="" id="forceunit-none"> Unit as selected</label>
+							<label for="forceunit-metric"><input type="radio" name="unitselect" value="metric" id="forceunit-metric"> metric</label>
+							<label for="forceunit-imperial"><input type="radio" name="unitselect" value="imperial" id="forceunit-imperial"> imperial</label>
+						</div>
+					<br />
+					<input type="submit" id="configsubmit" value="SET">
+					<input type="reset" id="configreset" value="CANCEL">
+					<input type="button" id="resetall" value="RESET ALL">
+				</form>
+			</div>
+	
+			<div id="countdown"></div>
+			
+			<div id="alert">
+				<h2></h2>
+				<p></p>
+			</div>
+
+			<div id="stallwarner"></div>
+			
+		</div>
+		<div id="nav_debug">DEBUG</div>
+
+	</div>
+</script>
+
+<script type="text/html" import-script="/JS/SimPlane.js"></script>
+<script type="text/html" import-script="/JS/dataStorage.js"></script>
+
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/Shared/Map/MapInstrument.html"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/NavSystemTouch.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/NearestWaypoint.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/Waypoint.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/navmap_topomap.js?ae"></script>
+
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/interface.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/navpanel.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/configpanel.js?ai"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/thermalling_display/thermalling_display.js?ae"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/nav.js?ad"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/soarnet.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/soarnet_class.js"></script>
