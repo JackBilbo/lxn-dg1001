@@ -1,42 +1,22 @@
-<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/nav.css?ae" />
-<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/bignumbers.css?aa" />
+<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/nav.css?ac" />
+<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/bignumbers.css" />
 <link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/task-page.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
       integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
       crossorigin=""/>
 <link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/thermalling_display/thermalling_display.css?a" />
-<link rel="stylesheet" href="/Pages/VCockpit/Instruments/DG1001/nav/css/soarnet.css" />
+<link rel="stylesheet" href="/Pages/VCockpit/InstrumentsDG1001/nav/css/soarnet.css" />
 
 <script type="text/html" id="lxn">
     <div id="Mainframe" class="map_northup">
 		<div id="battery_required">
 			<div class="loader"><div class="bar"></div></div>
-			<div id="Map" width="1000" height="1000"></div>
+			<div id="Map" ></div>
 
-			
 			<div class="speedgauge">
 				<div class="speedband">
-					<div class="speedladder kmh">
-						<div class="flap_indicator">
-							<div class="flap_0">-3</div>
-							<div class="flap_1">-2</div>
-							<div class="flap_2">-1</div>
-							<div class="flap_3">0</div>
-							<div class="flap_4">T1</div>
-							<div class="flap_5">T2</div>
-						</div>
-						<div class="stfmarker"></div></div>
-					<div class="speedladder kts">
-						<div class="flap_indicator">
-							<div class="flap_0">-3</div>
-							<div class="flap_1">-2</div>
-							<div class="flap_2">-1</div>
-							<div class="flap_3">0</div>
-							<div class="flap_4">T1</div>
-							<div class="flap_5">T2</div>
-						</div>
-						<div class="stfmarker"></div>
-					</div>
+					<div class="speedladder kmh"><div class="stfmarker"></div></div>
+					<div class="speedladder kts"><div class="stfmarker"></div></div>
 					<div class="currentspeed"><span>0</span>
 						<div class="currentspeed_arrow"></div>
 					</div>
@@ -55,10 +35,7 @@
 						<span class="livedata" data-value="mccready" showunit="no"></span>
 					</div>
 					<a href="#" class="datacell-clickspot"></a>
-					<div class="mcbuttons">
-						<button class="button inc">+</button>
-						<button class="button dec">-</button>
-					</div>
+					
 				</div>
 			</div>
 	
@@ -93,6 +70,7 @@
 				</div>
 				<div id="pointerstraight">|</div>
 			</div>
+
 
 			<div id="glidericon">
                 <div id="ac_hdg"></div>
@@ -315,7 +293,7 @@
                                             <span class="number">188</span><span class="unit">km</span>
                                         </div></div>
                                     <div class="task-arrivalheight"><div class="shine"></div>
-                                        <span class="label">Finish Alt.</span>
+                                        <span class="label">Finish Alt</span>
                                         <div class="value">
                                             <span class="number"></span><span class="unit">m</span>
                                         </div>
@@ -330,11 +308,11 @@
                                 </div>
                             </header>
 			    
-			    <div class="task-alerts">
+			    			<div class="task-alerts">
                                 Attention: Slew activated!
                             </div>
 			    
-			    <div id="wp-template" class="task-waypoint">
+			    			<div id="wp-template" class="task-waypoint">
                                 <div class="header">
                                     <div class="wp-name"></div>
                                     <div class="badge wp-ok">OK</div>
@@ -349,7 +327,7 @@
                                                 <span class="number">0</span><span class="unit"></span>
                                             </div>
                                         </div>
-					<div class="wp-data ete"><div class="shine"></div>
+					    				<div class="wp-data ete"><div class="shine"></div>
                                             <span class="label">ETE</span>
                                             <div class="value">
                                                 <span class="number"></span><span class="unit"></span>
@@ -449,6 +427,7 @@
 								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 
@@ -472,7 +451,7 @@
 										3. Minimize KineticAssistant
 									</div>
 									<div id="touching_cloud">
-									<img src="/Pages/VCockpit/Instruments/DG1001/nav/touchcloud.png"/>
+									<img src="/Pages/VCockpit/Instruments/TouchingCloud/TEXTURE/touchcloud.png"/>
 									</div>
 								</div>
 							</div>
@@ -490,7 +469,7 @@
 							<div id="systemconfig">
 								<div class="buttonwrapper">
 									<button class="lxconfigbtn" id="conf_wb" aria-controls="conf_panel_wb">Ballast</button>
-									<!-- button class="lxconfigbtn" id="conf_system" aria-controls="conf_panel_system">System Settings</button -->
+									<button class="lxconfigbtn" id="conf_system" aria-controls="conf_panel_system">Aircraft Settings</button>
 									<button class="lxconfigbtn" id="conf_units" aria-controls="conf_panel_units">Units</button>
 									<button class="lxconfigbtn" id="conf_interface" aria-controls="conf_panel_interface">Interface Options</button>
 									<!--
@@ -503,16 +482,12 @@
 									<div class="configpanel_content">
 										<div class="configpanel_content">
 											<div class="tanks">
-                                        		<div class="ballasttank left" data-tank="left"><div class="level"></div><div class="number"></div></div>
-                                        		<div class="centertankframe">
-                                            		<div class="ballasttank center" data-tank="center"><div class="level"></div><div class="number"></div></div>
-                                            		<div class="ballasttank back" data-tank="back"><div class="level"></div><div class="number"></div></div>
-                                        		</div>
-                                        		<div class="ballasttank right" data-tank="right"><div class="level"></div><div class="number"></div></div>
-                                    		</div>
-											<div id="ballastslider" class="rangeinput" data-min="0" data-max="100" data-value="100" data-callback="output"></div>
+												<div class="ballasttank left" data-tank="left"><div class="level"></div><div class="number"></div></div>
+												<div class="ballasttank tail" data-tank="tail"><div class="level"></div><div class="number"></div></div>
+												<div class="ballasttank right" data-tank="right"><div class="level"></div><div class="number"></div></div>
+											</div>
+											<div id="ballastslider" class="rangeinput" data-min="0" data-max="100" data-value="50" data-callback="output"></div>
 											<div class="total">Total: <span class="livedata" data-value="ballast"></span></div>
-											<div id="singletanks"></div>
 										</div>
 									</div>
 									<div class="configpanel_buttons">
@@ -520,13 +495,63 @@
 									</div>
 								</div>
 								<div class="configpanel" id="conf_panel_system" aria-controlledby="conf_system">
-									<header>System Settings</header>
+									<header>Aircraft Settings</header>
 									<div class="configpanel_content">
-																	
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Canopy tint</div>
+											</div>
+											<div class="config_toggle" state="off" data-callback="toggleCanopyTint">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Canopy cover</div>
+											</div>
+											<div class="config_toggle" state="off" data-callback="toggleCanopyCover">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Oxygen available</div>
+											</div>
+											<div class="config_toggle" state="on" data-callback="toggleOxygen">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry">
+											<div class="config_label">
+												<div class="title">Navlight Switch</div>
+											</div>
+											<div class="config_toggle" state="on" data-callback="toggleNavlight">
+												<div class="handle"></div>
+											</div>
+										</div>
+										<div class="config_entry range">
+											<div class="config_label">
+												<div class="title">Display Brightness</div>
+											</div>
+											<div id="brightnesslider" class="rangeinput" data-min="0" data-max="1" data-value="1"></div>
+										</div>
+										<div class="config_entry range">
+											<div class="config_label">
+												<div class="title">Glareshield Light Brightness</div>
+											</div>
+											<div id="glareshieldslider" class="rangeinput" data-min="0" data-max="100" data-value="50"></div>
+										</div>
+										<div class="config_entry range">
+											<div class="config_label">
+												<div class="title">Adverse Yaw Realism</div>
+											</div>
+											<div id="adverseyawslider" class="rangeinput" data-min="0" data-max="1" data-value=".5"></div>
+										</div>
+										
 
 									</div>
 									<div class="configpanel_buttons">
-										<a href="#" class="configpanel_close">CLOSE</a>
+										<a href="#" class="configpanel_close">CLOSE & SAVE</a>
 									</div>
 								</div>
 								<div class="configpanel" id="conf_panel_units" aria-controlledby="conf_units"><header>Units</header>
@@ -541,13 +566,14 @@
 
 									</div>
 									<div class="configpanel_buttons">
-										<a href="#" class="configpanel_close">CLOSE</a>
+										<a href="#" class="configpanel_close">CLOSE & SAVE</a>
 									</div>
 								</div>
 								<div class="configpanel" id="conf_panel_bugs" aria-controlledby="conf_bugs"><header>Bugs? Bugs!</header>
 									<div class="configpanel_content">
-										<p>IRL a factor for dirt and dead bugs on the wings. Can be used to adjust arrival height calculations. See README-file.</p>
-										<div style="text-align: center;"><input id="buginput" type="text" size="4" value="80" /></div>
+										<p>IRL a factor for dirt and dead bugs on the wings. Can be used to adjust arrival height calculations. See README-file.
+										</p>
+										<div style="text-align: center;"><input id="buginput" type="text" size="6" value="100" /></div>
 									</div>
 									<div class="configpanel_buttons">
 										<a href="#" class="configpanel_close">CLOSE</a>
@@ -616,7 +642,7 @@
 										</div>
 									</div>
 									<div class="configpanel_buttons">
-										<a href="#" class="configpanel_close">CLOSE</a>
+										<a href="#" class="configpanel_close">CLOSE & SAVE</a>
 									</div>
 								</div>
 								<div class="configpanel" id="conf_panel_pc" aria-controlledby="conf_pc"><header>Polar Curve</header>
@@ -624,7 +650,7 @@
 	
 									</div>
 									<div class="configpanel_buttons">
-										<a href="#" class="configpanel_close">CLOSE</a>
+										<a href="#" class="configpanel_close">CLOSE & SAVE</a>
 									</div>
 								</div>
 							</div>
@@ -735,24 +761,22 @@
 							<label for="forceunit-imperial"><input type="radio" name="unitselect" value="imperial" id="forceunit-imperial"> imperial</label>
 						</div>
 					<br />
-					<input type="submit" id="configsubmit" value="SET">
-					<input type="reset" id="configreset" value="CANCEL">
-					<input type="button" id="resetall" value="RESET ALL">
+					<input type="submit" id="configsubmit" class="cellconfigbtn" value="SET">
+					<input type="reset" id="configreset" class="cellconfigbtn" value="CANCEL">
+					<input type="button" id="resetall" class="cellconfigbtn" value="RESET ALL">
 				</form>
 			</div>
-	
+
 			<div id="countdown"></div>
-			
+	
 			<div id="alert">
 				<h2></h2>
 				<p></p>
 			</div>
-
 			<div id="stallwarner"></div>
 			
 		</div>
 		<div id="nav_debug">DEBUG</div>
-
 	</div>
 </script>
 
@@ -764,14 +788,14 @@
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/NearestWaypoint.js"></script>
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/Waypoint.js"></script>
 
-<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/navmap_topomap.js?ae"></script>
-
 <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/navmap_topomap.js"></script>
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/interface.js"></script>
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/navpanel.js"></script>
-<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/configpanel.js?ai"></script>
-<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/thermalling_display/thermalling_display.js?ae"></script>
-<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/nav.js?ad"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/configpanel.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/thermalling_display/thermalling_display.js?ad"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/nav.js?ag"></script>
 
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/soarnet.js"></script>
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/DG1001/nav/soarnet_class.js"></script>

@@ -23,11 +23,12 @@ class navmap {
         this.WP_NON_TASK_COLOR = "#999999";
 
         this.map_zoom = 12;
-        this.map_maxzoom = 16;
-        this.map_minzoom = 8;
+        this.map_maxzoom = 17;
+        this.map_minzoom = 7;
         this.map_rotation = "northup";
         this.taskispainted = false;
         this.mapwaypoints = [];
+        SimVar.SetSimVarValue("L:LX_Knob_1","percent", (this.map_zoom - 7) / 10);
 
         this.maptimer = 0;
 
@@ -35,9 +36,9 @@ class navmap {
 
         this.map_overlay_el = document.getElementById("lx_9050_map_overlay");
         this.task_svg_el = document.getElementById("lx_9050_task");
-        
-        this.mpMarker = {};
 
+        this.mpMarker = {};
+        
         TOPOMAP = "noinit";
     }
 
@@ -47,15 +48,6 @@ class navmap {
 
     // load_map called from Update(), only executes once
     load_map() {
-
-        // Map will be initialised on the 10th update cycle from aircraft load
-        if (this.load_map_called == null || this.load_map_called < 500) {
-            this.load_map_called = this.load_map_called == null ? 1 : this.load_map_called + 1;
-
-            document.querySelector(".loader .bar").style.width = (this.load_map_called * 0.2) + "%";
-
-            if (this.load_map_called == 500) { // this is experimental code to delay the
-                // Map elements
 
                 this.smallairportIcon = L.icon({
                     iconUrl: '/Pages/VCockpit/Instruments/Shared/Map/Images/ICON_MAP_AIRPORT_NON_TOWERED_NON_SERVICED_PINK.png',
@@ -87,12 +79,15 @@ class navmap {
 
                 this.map_instrument_loaded = true;
                 let navmap = this;
-                let storedorientation = GetStoredData("Discus_map_rotation");
+
+                    /*
+                    let storedorientation = GetStoredData("Discus_map_rotation");
 
                     if(storedorientation == "trackup" || storedorientation == "northup" ) {
                         navmap.set_map_rotation(storedorientation);
                     }
 
+                    
                     document.querySelector("#map_orientation").addEventListener("click", function() {
                         if(navmap.map_rotation == "trackup") {
                             navmap.map_rotation = "northup";
@@ -102,6 +97,7 @@ class navmap {
                 
                         navmap.set_map_rotation(navmap.map_rotation);
                     });
+                    
                 
                     document.querySelector("#map_zoomin").addEventListener("click", function() {
                         navmap.zoom_in();
@@ -110,31 +106,8 @@ class navmap {
                     document.querySelector("#map_zoomout").addEventListener("click", function() {
                         navmap.zoom_out();
                     })
+                    */
                 
-                this.maptimer = this.instrument.TIME_S;
-                
-            }
-
-                
-        }
-
-        if (this.map_instrument_loaded) {
-            // this.update_sim_time();
-            this.update_map();
-
-            if(this.map_rotation == "northup") {
-                document.getElementById("glidericon").style.transform = "rotate(" + this.instrument.vars.hdg.value + "deg)";
-                document.getElementById("Map").style.transform = "rotate(0deg) scale(3)";
-            } else {
-                document.getElementById("glidericon").style.transform = "rotate(0deg)";
-                document.getElementById("Map").style.transform = "rotate(-" + this.instrument.vars.hdg.value + "deg) scale(3)";
-            }
-
-            if(this.instrument.vars.ias.value > 20) {
-                document.getElementById("ac_trk").style.transform = "rotate(" + (this.instrument.vars.trk.value - this.instrument.vars.hdg.value) + "deg)";
-            } 
-            
-        } 
     }
 
     // Update contents of the Map div, i.e. the MapInstrument, bing-map and Task overlay
@@ -142,11 +115,21 @@ class navmap {
     update_map() {
 
         this.update_map_center();
-        this.draw_courseline();
+        // this.draw_courseline();
 
         if (B21_SOARING_ENGINE.task_active() && this.taskispainted == false) {
            this.draw_task();
         }
+
+        if(this.map_rotation == "northup") {
+            document.getElementById("glidericon").style.transform = "rotate(" + SimVar.GetSimVarValue("A:PLANE HEADING DEGREES TRUE","degrees") + "deg)";
+            document.getElementById("Map").style.transform = "rotate(0deg) scale(2)";
+        } else {
+            document.getElementById("glidericon").style.transform = "rotate(0deg)";
+            document.getElementById("Map").style.transform = "rotate(-" + SimVar.GetSimVarValue("A:PLANE HEADING DEGREES TRUE","degrees") + "deg) scale(2)";
+        }
+
+        document.getElementById("ac_trk").style.transform = "rotate(" + (SimVar.GetSimVarValue("GPS GROUND TRUE TRACK","degrees") - SimVar.GetSimVarValue("A:PLANE HEADING DEGREES TRUE","degrees")) + "deg)"; 
 
     }
 
@@ -218,11 +201,13 @@ class navmap {
 
     zoom_in() {
         this.map_zoom = this.map_zoom < this.map_maxzoom ? this.map_zoom + 1 : this.map_maxzoom;
+        
     }
 
     // Zoom map out (i.e. zoom index += 1)
     zoom_out() {
         this.map_zoom = this.map_zoom > this.map_minzoom ? this.map_zoom - 1 : this.map_minzoom;
+        
     }
 
 
@@ -450,7 +435,7 @@ class navmap {
             }
         }
         
-    }
+    } 
 
     paintAirports(airports) {
         if(this.airportsgeojson) { TOPOMAP.removeLayer(this.airportsgeojson); }
@@ -529,10 +514,9 @@ class navmap {
         if(this.hasAipLayer) {
             this.addAipLayer()
         }
-        
+    
         this.taskgeojson = L.geoJSON("", {style: function(feature) { return feature.properties; }}).addTo(TOPOMAP);
-        NAVPANEL.buildAirportList();
-
+        // NAVPANEL.buildAirportList();
     }
 
     addAipLayer() {

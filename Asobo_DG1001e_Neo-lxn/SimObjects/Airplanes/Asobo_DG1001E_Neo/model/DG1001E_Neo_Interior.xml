@@ -1,0 +1,1406 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ModelInfo>
+	<LODS>
+		<!-- Highest LOD -->
+		<!-- minimum display size in % (should be bounding sphere vertical screen size, sphere will often be slightly larger than you expect) -->
+		<!-- default minSize is 0 -->
+		<LOD minSize="110" 	ModelFile="DG_1001E_Neo_Cockpit_Lod00.gltf"/>
+		<LOD minSize="35" 	ModelFile="DG_1001E_Neo_Cockpit_Lod01.gltf"/> 
+		<LOD minSize="20" 	ModelFile="DG_1001E_Neo_Cockpit_Lod02.gltf"/>
+		<LOD minSize="10" 	ModelFile="DG_1001E_Neo_Cockpit_Lod03.gltf"/>
+		<LOD minSize="5" 	ModelFile="DG_1001E_Neo_Cockpit_Lod04.gltf"/>
+		<LOD minSize="0" 	ModelFile="DG_1001E_Neo_Cockpit_Lod05.gltf"/>
+	</LODS> 	
+	
+	<Behaviors>
+		<!-- Includes ###################################### -->
+		<Include ModelBehaviorFile="Asobo\Common.xml"/>
+		<Include ModelBehaviorFile="Asobo\Exterior.xml"/>
+		<Include ModelBehaviorFile="Asobo\Generic\FX.xml"/>
+		<Include ModelBehaviorFile="Asobo\NAVCOM\ASNAV.xml"/>
+		<Include ModelBehaviorFile="ACD-57\ACD-57.xml"/>	
+	<!--	
+		<Include ModelBehaviorFile="Asobo\GlassCockpit\AS3X_Touch.xml"/><Include ModelBehaviorFile="IBIS-II\IBIS-II.xml"/>	-->
+		<Include ModelBehaviorFile="FES-FCU\FES-FCU.xml"/>		
+		<Include ModelBehaviorFile="Asobo_DG1001E_Neo\Inputs.xml"/>		
+		<!-- ###################################### --> 
+
+
+
+
+
+    <Template Name="DG1001_ACD57_Template">
+        <Parameters Type="Default">
+			<XPDR_INDEX>1</XPDR_INDEX>
+			<RADIO_INDEX>1</RADIO_INDEX>
+			<ID>1</ID>
+			<SUFFIX>_01</SUFFIX>
+						<SCREEN>ACD57_Screen_01</SCREEN>
+						<BUTTON_0>ACD57_Button_1_01</BUTTON_0>
+						<BUTTON_1>ACD57_Button_2_01</BUTTON_1>
+						<BUTTON_2>ACD57_Button_3_01</BUTTON_2>
+						<BUTTON_3>ACD57_Button_4_01</BUTTON_3>
+						<KNOB_OUTER>ACD57_OuterKnob_01</KNOB_OUTER>
+						<KNOB_INNER>ACD57_InnerKnob_01</KNOB_INNER>
+		</Parameters>
+
+        <Component ID="ACD57_BackLight_#ID#" Node="#SCREEN#">
+            <UseTemplate Name="ACD57_Emmisive_Template">
+				<NODE_ID>#SCREEN#</NODE_ID>
+                <VAR_NAME>L:ACD57_SCREEN_BRIGHTNESS_#XPDR_INDEX#_#RADIO_INDEX#</VAR_NAME>
+            </UseTemplate>
+        </Component>
+        <Component ID="ACD57_Btn1_#ID#" Node="#BUTTON_0#">
+            <UseTemplate Name="ACD57_BTN_PUSH_MOMENTARY">
+				<NODE_ID>#BUTTON_0#</NODE_ID>
+                <ANIM_NAME>ANIM_ACD57_BTN1#SUFFIX#</ANIM_NAME>
+                <VAR_NAME>L:ACD57_BTN1_#XPDR_INDEX#_#RADIO_INDEX#</VAR_NAME>
+                <TOOLTIPID>Btn1 On/Off</TOOLTIPID>
+            </UseTemplate>
+        </Component>
+        <Component ID="ACD57_Btn2_#ID#" Node="#BUTTON_1#">
+            <UseTemplate Name="ACD57_BTN_PUSH_MOMENTARY">
+				<NODE_ID>#BUTTON_1#</NODE_ID>
+                <ANIM_NAME>ANIM_ACD57_BTN2#SUFFIX#</ANIM_NAME>
+                <VAR_NAME>L:ACD57_BTN2_#XPDR_INDEX#_#RADIO_INDEX#</VAR_NAME>
+                <TOOLTIPID>Btn2</TOOLTIPID>
+            </UseTemplate>
+        </Component>       
+        <Component ID="ACD57_Btn3_#ID#" Node="#BUTTON_2#">
+            <UseTemplate Name="ACD57_BTN_PUSH_MOMENTARY">
+				<NODE_ID>#BUTTON_2#</NODE_ID>
+                <ANIM_NAME>ANIM_ACD57_BTN3#SUFFIX#</ANIM_NAME>
+                <VAR_NAME>L:ACD57_BTN3_#XPDR_INDEX#_#RADIO_INDEX#</VAR_NAME>
+                <TOOLTIPID>Btn3</TOOLTIPID>
+            </UseTemplate>
+        </Component>          
+        <Component ID="ACD57_Btn4_#ID#" Node="#BUTTON_3#">
+            <UseTemplate Name="ACD57_BTN_PUSH_MOMENTARY">
+				<NODE_ID>#BUTTON_3#</NODE_ID>
+                <ANIM_NAME>ANIM_ACD57_BTN4#SUFFIX#</ANIM_NAME>
+                <VAR_NAME>L:ACD57_BTN4_#XPDR_INDEX#_#RADIO_INDEX#</VAR_NAME>
+                <TOOLTIPID>Btn4</TOOLTIPID>
+            </UseTemplate>
+        </Component>   
+        <Component ID="ACD57_RotaryOuter_#ID#" Node="#KNOB_OUTER#">
+            <UseTemplate Name="ACD57_ROTARY_INFINITE">
+                <NODE_ID>#KNOB_OUTER#</NODE_ID>
+                <ANIM_NAME>ANIM_ACD57_OUTERKNOB_ROT#SUFFIX#</ANIM_NAME>
+                <VAR_NAME>L:ACD57_ROTARY_OUTER_#XPDR_INDEX#_#RADIO_INDEX#</VAR_NAME>		
+				<WHEEL_REACTION>0.01388</WHEEL_REACTION>		
+				<DRAG_REACTION>0.05</DRAG_REACTION>
+                <TOOLTIP_VAL_CODE>(L:ACD57_ROTARY_OUTER_#XPDR_INDEX#_#RADIO_INDEX#)</TOOLTIP_VAL_CODE>
+				<TOOLTIPID>Select</TOOLTIPID>
+            </UseTemplate>
+        </Component>        
+        <Component ID="ACD57_RotaryInner_#ID#" Node="#KNOB_INNER#">
+            <UseTemplate Name="ACD57_ROTARY_INFINITE_PUSH">
+                <NODE_ID>#KNOB_INNER#</NODE_ID>
+                <ANIM_NAME>ANIM_ACD57_INNERKNOB_ROT#SUFFIX#</ANIM_NAME>
+                <VAR_NAME>L:ACD57_ROTARY_INNER_#XPDR_INDEX#_#RADIO_INDEX#</VAR_NAME>	
+                <PUSH_ANIM_NAME>ANIM_ACD57_INNERKNOB_PUSH#SUFFIX#</PUSH_ANIM_NAME>
+                <PUSH_VAR_NAME>L:ACD57_ROTARY_INNER_PUSH_#XPDR_INDEX#_#RADIO_INDEX#</PUSH_VAR_NAME>	
+				<WHEEL_REACTION>0.01388</WHEEL_REACTION>		
+				<DRAG_REACTION>0.05</DRAG_REACTION>		
+                <TOOLTIP_VAL_CODE>'&lt;&lt;&gt;&gt;'</TOOLTIP_VAL_CODE>
+				<TOOLTIPID>Values</TOOLTIPID>
+            </UseTemplate>
+        </Component>                      
+    </Template>    
+
+
+
+
+<!-- 2-State Switch with Cover ======================================================= -->
+	<Template Name="DG1001_Covered_Switch">
+		<Parameters Type="Default">
+		<COVER_NODE_ID>#COVER_ANIM_NAME#</COVER_NODE_ID>
+		<SWITCH_NODE_ID>#SWITCH_ANIM_NAME#</SWITCH_NODE_ID>
+			<INPUT_EVENT_ID_SOURCE>INSTRUMENT</INPUT_EVENT_ID_SOURCE>
+			<TT_COVER_TITLE>@TT_Package.COMMON_COVER_TITLE</TT_COVER_TITLE>
+			<TT_COVER_ACTION>@TT_Package.COMMON_COVER_ACTION</TT_COVER_ACTION>
+			<TT_SWITCH_TITLE>@TTPC6.#TT_BASE#_TITLE</TT_SWITCH_TITLE>
+			<TT_SWITCH_ACTION>@TTPC6.#TT_BASE#_DESC</TT_SWITCH_ACTION>
+		</Parameters>
+		<!-- Cover =========================================================================== -->
+		<Component ID="#COVER_ANIM_NAME#_Comp">
+			<UseTemplate Name="ASOBO_#INPUT_EVENT_ID_SOURCE#_Base_Template">
+				<IE_NAME>#COVER_ANIM_NAME#</IE_NAME>
+				<NODE_ID>#COVER_NODE_ID#</NODE_ID>
+				<PART_ID>#COVER_NODE_ID#</PART_ID>
+				<ANIM_NAME>#COVER_ANIM_NAME#</ANIM_NAME>
+				<ANIM_LENGTH>50</ANIM_LENGTH>
+				<INTERACTION_TYPE>Switch</INTERACTION_TYPE>
+				<TT_DESCRIPTION_ID>#TT_COVER_ACTION#</TT_DESCRIPTION_ID>
+				<TOOLTIPID>%POWER COVER%</TOOLTIPID>
+				<SET_STATE_ON>
+					1 (&gt;L:XMLVAR_#COVER_ANIM_NAME#)
+					0 (&gt;L:XMLVAR_#COVER_ANIM_NAME#_CNT)
+
+				</SET_STATE_ON>
+				<SET_STATE_OFF>
+					1 (&gt;#B:#INPUT_EVENT_ID_SOURCE#_#SWITCH_ANIM_NAME#_OFF)
+					0 (&gt;L:XMLVAR_#COVER_ANIM_NAME#) 
+					0 (&gt;A:CIRCUIT CONNECTION ON:13, Bool)
+
+				</SET_STATE_OFF>
+				<GET_STATE_EXTERNAL>(A:CIRCUIT CONNECTION ON:13, Bool) sp0</GET_STATE_EXTERNAL>
+				<TT_VALUE_OFF>%off%</TT_VALUE_OFF>
+				<TT_VALUE_ON>%on%</TT_VALUE_ON>
+				<GET_INIT_STATE_EXTERNAL>0</GET_INIT_STATE_EXTERNAL>
+				<WWISE_EVENT_1>cover_SWITCH_ON</WWISE_EVENT_1>
+				<WWISE_EVENT_2>cover_SWITCH_OFF</WWISE_EVENT_2>
+			</UseTemplate>
+		</Component>
+		<!-- Switch ========================================================================== -->
+		<Component ID="#SWITCH_ANIM_NAME#_COMP">
+				<UseTemplate Name="ASOBO_ELECTRICAL_Base_Template">
+					<IE_NAME>#SWITCH_ANIM_NAME#</IE_NAME>
+					<NODE_ID>#SWITCH_NODE_ID#</NODE_ID>
+					<PART_ID>#SWITCH_NODE_ID#</PART_ID>
+					<ANIM_NAME>#SWITCH_ANIM_NAME#</ANIM_NAME>
+					<ANIM_LENGTH>50</ANIM_LENGTH>
+					<INTERACTION_TYPE>Switch</INTERACTION_TYPE>
+					<TOOLTIPID>%POWER ENGINE%</TOOLTIPID>
+					<TT_DESCRIPTION_ID>#TT_COVER_ACTION#</TT_DESCRIPTION_ID>
+					<SET_STATE_ON>
+						0 (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1)
+						0 (&gt;L:DG1001_ENGINE_THROTTLE)
+						0 (&gt;L:FES_FCU_INST_KNOB_ROTATE)
+						0 (&gt;L:LAST_KNOB)
+						
+						1 (&gt;L:XMLVAR_#SWITCH_ANIM_NAME#)
+						0 (&gt;L:XMLVAR_#SWITCH_ANIM_NAME#_CNT)
+						1 (&gt;A:CIRCUIT CONNECTION ON:13, Bool)
+						
+					(A:CIRCUIT CONNECTION ON:12, Bool) 1 == 
+					(L:DG1001_CANOPY, bool) 1 &lt; and 
+						(A:AIRSPEED INDICATED, Knots) 43 &gt;= and
+						(A:AIRSPEED INDICATED, Knots) 86 &lt;= and if{
+						
+						1 (&gt;L:FES_MOTOR_ON)
+						1 (&gt;A:FCU_POWER ON, Bool)
+						1 (&gt;L:FES_FCU_SWITCH_POWER, Boolean)
+						0 (&gt;L:DG1001_PROPELLER_LOCKED, bool)
+						100 (&gt;L:IBIS_II_ENG_TARGET_POS)
+						
+						} els{
+							1 (&gt;L:FES_FCU_LIGHT_ALARM_RED, Boolean)
+							}
+						
+
+					</SET_STATE_ON>
+					<SET_STATE_OFF>
+						1 (&gt;#B:#INPUT_EVENT_ID_SOURCE#_#SWITCH_ANIM_NAME#_OFF)
+						0 (&gt;L:XMLVAR_#SWITCH_ANIM_NAME#) 
+						0 (&gt;A:CIRCUIT CONNECTION ON:13, Bool)
+						0 (&gt;L:FES_MOTOR_ON)
+						0 (&gt;A:FCU_POWER ON, Bool)
+						0 (&gt;L:FES_FCU_SWITCH_POWER, number)
+						
+						0 (&gt;L:IBIS_II_ENG_TARGET_POS)
+						0 (&gt;L:FES_FCU_LIGHT_ALARM_RED, Boolean)
+
+					</SET_STATE_OFF>
+					<GET_STATE_EXTERNAL>(A:CIRCUIT CONNECTION ON:13, Bool) sp0</GET_STATE_EXTERNAL>
+					<TT_VALUE_OFF>(R:1:@TTPC6.LABEL_CLOSED)</TT_VALUE_OFF>
+					<TT_VALUE_ON>(R:1:@TTPC6.LABEL_OPEN)</TT_VALUE_ON>
+					<GET_INIT_STATE_EXTERNAL>0</GET_INIT_STATE_EXTERNAL>
+					<WWISE_EVENT_1>FES_SWITCH_ON</WWISE_EVENT_1>
+					<WWISE_EVENT_2>FES_SWITCH_OFF</WWISE_EVENT_2>
+				</UseTemplate>
+				
+		</Component>
+	</Template>
+	
+    <Template Name="DG1001_FES_FCU_KNOB">
+        <UseTemplate Name="FES_FCU_ROTARY_INFINITE_PUSH">
+            <NODE_ID>Empty_Instrument_Knob_Push</NODE_ID>
+            <ANIM_NAME>ANIM_INST_KNOB_ROTATE</ANIM_NAME>
+            <VAR_NAME>L:FES_FCU_INST_KNOB_ROTATE</VAR_NAME>	
+            <PUSH_ANIM_NAME>ANIM_INST_KNOB_PUSH</PUSH_ANIM_NAME>
+            <PUSH_VAR_NAME>L:FES_FCU_INST_KNOB_PUSH</PUSH_VAR_NAME>	
+            <WHEEL_REACTION>0.01388</WHEEL_REACTION>		
+            <DRAG_REACTION>0.05</DRAG_REACTION>		
+            <TOOLTIP_VAL_CODE>(A:GENERAL ENG THROTTLE LEVER POSITION:1,percent) near</TOOLTIP_VAL_CODE>
+            <TOOLTIP_PUSH_VAL_CODE>(L:FES_FCU_INST_KNOB_PUSH) 0 &gt; </TOOLTIP_PUSH_VAL_CODE>
+            <TOOLTIPID>THROTTLE KNOB</TOOLTIPID>
+            <CLOCKWISE_CODE>
+			(L:DG1001_CANOPY, bool) 0 == 
+			(A:CIRCUIT CONNECTION ON:13, Bool) and
+                (L:FES_FCU_SWITCH_POWER) 0 &gt; and
+						(A:AIRSPEED INDICATED, Knots) 43 &gt;= and
+						(A:AIRSPEED INDICATED, Knots) 86 &lt;= and if{
+                    0 (&gt;L:FES_FCU_THROTTLE_BLINK)
+                    (L:FES_FCU_INST_KNOB_PUSH) 0 &gt; if{ 1 } els{ 10 } (&gt;O:KNOB_SCALE)
+                    (L:FES_FCU_INST_KNOB_ROTATE) (L:LAST_KNOB) - (O:KNOB_SCALE) *
+                    (A:GENERAL ENG THROTTLE LEVER POSITION:1,percent) + 100 min (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1,percent) 
+                    (L:FES_FCU_INST_KNOB_ROTATE) (&gt;L:LAST_KNOB)
+				} els{
+						0 (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1)
+						0 (&gt;L:DG1001_ENGINE_THROTTLE)
+						0 (&gt;L:FES_FCU_INST_KNOB_ROTATE)
+						0 (&gt;L:LAST_KNOB)
+						1 (&gt;L:FES_FCU_THROTTLE_BLINK)
+						1 (&gt;L:FES_FCU_LIGHT_ALARM_RED, Boolean)
+				}
+            </CLOCKWISE_CODE>
+            <ANTICLOCKWISE_CODE>
+			(L:DG1001_CANOPY, bool) 0 == 
+			(A:CIRCUIT CONNECTION ON:13, Bool) 1 == and
+                (L:FES_FCU_SWITCH_POWER) 0 &gt; and if{
+                    (L:FES_FCU_INST_KNOB_PUSH) 0 &gt; if{ 1 } els{ 10 } (&gt;O:KNOB_SCALE)
+                    (L:FES_FCU_INST_KNOB_ROTATE) (L:LAST_KNOB) - (O:KNOB_SCALE) * (A:GENERAL ENG THROTTLE LEVER POSITION:1,percent) + (&gt;O:TEMP)
+                    (O:TEMP) 0 &lt; (L:FES_MOTOR_ON) 0 &gt; &amp;&amp; if{ 1 (&gt;L:FES_FCU_THROTTLE_BLINK) }
+                    (O:TEMP) 0 max (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1,percent) 
+                    (L:FES_FCU_INST_KNOB_ROTATE) (&gt;L:LAST_KNOB)
+				} els{
+						0 (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1)
+						0 (&gt;L:DG1001_ENGINE_THROTTLE)
+						0 (&gt;L:FES_FCU_INST_KNOB_ROTATE)
+						0 (&gt;L:LAST_KNOB)
+				}
+            </ANTICLOCKWISE_CODE>
+        </UseTemplate>
+    </Template>
+
+<Template Name="DG1001_SMOOTH_ANIM">
+			<DefaultTemplateParameters>
+				<ANIM_DURATION>0.5</ANIM_DURATION>
+				<ANIM_FRAME_MIN>0</ANIM_FRAME_MIN>
+				<ANIM_FRAME_MAX>100</ANIM_FRAME_MAX>
+				<ANIM_NAME>#NODE#</ANIM_NAME>
+				<ANIM_LAG>0</ANIM_LAG>
+				<EXTRA_CODE></EXTRA_CODE>
+			</DefaultTemplateParameters>
+
+			<UseTemplate Name="ASOBO_GT_Anim_Code">
+				<ANIM_NAME>#ANIM_NAME#</ANIM_NAME>
+				<ANIM_LENGTH>#ANIM_FRAME_MAX# #ANIM_FRAME_MIN# -</ANIM_LENGTH>
+				<ANIM_DURATION>#ANIM_DURATION#</ANIM_DURATION>
+				<ANIM_LAG>#ANIM_LAG#</ANIM_LAG>
+				<ANIM_CODE>
+					#ANIM_DURATION# (A:ANIMATION DELTA TIME, second) / (&gt;O:ANIM_INTERVAL)
+					#ANIM_FRAME_MAX# #ANIM_FRAME_MIN# - (O:ANIM_INTERVAL) / (&gt;O:ANIM_POS_INC)
+					(O:ANIM_TARGET_POS) (O:ANIM_CUR_POS) - abs (O:ANIM_POS_INC) &lt; if{
+						(O:ANIM_TARGET_POS) (&gt;O:ANIM_CUR_POS)
+					} els{
+						(O:ANIM_TARGET_POS) (O:ANIM_CUR_POS) &gt; if{
+							(O:ANIM_CUR_POS) (O:ANIM_POS_INC) + (&gt;O:ANIM_CUR_POS)
+						} els{
+							(O:ANIM_CUR_POS) (O:ANIM_POS_INC) - (&gt;O:ANIM_CUR_POS)
+						}
+					}
+					(O:ANIM_CUR_POS) #ANIM_FRAME_MIN# max (&gt;O:ANIM_CUR_POS)
+					(O:ANIM_CUR_POS) #ANIM_FRAME_MAX# min (&gt;O:ANIM_CUR_POS)
+					#EXTRA_CODE#
+					(O:ANIM_CUR_POS)					
+				</ANIM_CODE>
+			</UseTemplate>			
+		</Template>
+		
+<Template Name="DG1001_SWITCH_2STATE">
+			<DefaultTemplateParameters>
+				<ANIM_DURATION>0.5</ANIM_DURATION>
+				<ANIM_FRAME_MIN>0</ANIM_FRAME_MIN>
+				<ANIM_FRAME_MAX>100</ANIM_FRAME_MAX>
+				<ANIM_LAG>0</ANIM_LAG>
+				<CURSOR>Grab</CURSOR>
+				<TOOLTIP>Switch 2 State</TOOLTIP>
+				<VARNAME>#NODE#</VARNAME>
+				<ANIM_NAME>#NODE#</ANIM_NAME>
+				<VAR_ANIMPOS_MUL>100</VAR_ANIMPOS_MUL>
+				<EXTRA_CODE></EXTRA_CODE>
+				<CUSTOM_UPDATE_CODE></CUSTOM_UPDATE_CODE>
+			</DefaultTemplateParameters>
+
+			<UseTemplate Name="DG1001_SMOOTH_ANIM">
+				<ANIM_DURATION>#ANIM_DURATION#</ANIM_DURATION>
+				<ANIM_FRAME_MIN>#ANIM_FRAME_MIN#</ANIM_FRAME_MIN>
+				<ANIM_FRAME_MAX>#ANIM_FRAME_MAX#</ANIM_FRAME_MAX>
+				<ANIM_LAG>#ANIM_LAG#</ANIM_LAG>
+				<ANIM_NAME>#ANIM_NAME#</ANIM_NAME>
+				<EXTRA_CODE>#EXTRA_CODE#</EXTRA_CODE>
+			</UseTemplate>
+
+			<UseTemplate Name="ASOBO_GT_MouseRect">
+				<MouseFlags>LeftAll+WheelUp+WheelDown</MouseFlags>
+				<CURSOR>#CURSOR#</CURSOR>
+				<TOOLTIPID>#TOOLTIP#</TOOLTIPID>
+				<CALLBACKCODE>
+					(M:Event) 'LeftSingle' scmi 0 == if{ 
+						(#VARNAME#) ! (&gt;#VARNAME#)
+						(#VARNAME#) #VAR_ANIMPOS_MUL# * (&gt;O:ANIM_TARGET_POS)
+					}
+					(M:Event) 'WheelDown' scmi 0 == if{ 
+						0 (&gt;#VARNAME#)
+						(#VARNAME#) #VAR_ANIMPOS_MUL# * (&gt;O:ANIM_TARGET_POS)						
+					}
+					(M:Event) 'WheelUp' scmi 0 == if{ 
+						1 (&gt;#VARNAME#)
+						(#VARNAME#) #VAR_ANIMPOS_MUL# * (&gt;O:ANIM_TARGET_POS)		
+					}
+				</CALLBACKCODE>
+			</UseTemplate>
+
+			<Update Frequency="1">
+				(#VARNAME#) #VAR_ANIMPOS_MUL# * (&gt;O:ANIM_TARGET_POS)
+				#CUSTOM_UPDATE_CODE#
+			</Update>
+		</Template>
+		
+		
+	<!-- LANDING GEAR ###############################-->	
+	<Component ID="LANDING_GEAR_Lever_Gear">
+	    <NODE_ID>LANDING_GEAR_Lever_GEAR</NODE_ID>
+		<UseTemplate Name="ASOBO_LANDING_GEAR_Lever_Gear_Template">
+		<TOOLTIPID>%((A:GEAR HANDLE POSITION, percent) 50 &gt;)%{if}TT:COCKPIT.TOOLTIPS.LANDING_GEAR_DN %{else}TT:COCKPIT.TOOLTIPS.LANDING_GEAR_UP %{end}</TOOLTIPID>
+		<PART_ID>GEAR</PART_ID>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_LANDING_GEAR_Light_Center_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LANDING_GEAR_Light_Unsafe_Template">
+			<CHECK_GEAR_CENTER_POSITION/>
+		</UseTemplate>
+
+		<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<NODE_ID>LANDING_GEAR_Light_Center_UP</NODE_ID>
+				<EMISSIVE_CODE>(A:CONTACT POINT POSITION:0, Percent) 0 == 1 *</EMISSIVE_CODE>
+		</UseTemplate>
+	</Component>
+	
+	<Component ID="LANDING_GEAR_Lever_Gear_02">
+		<UseTemplate Name="ASOBO_LANDING_GEAR_Lever_Gear_Template">
+			<PART_ID>LANDING_GEAR_Lever_Gear_02</PART_ID>
+			<NODE_ID>LANDING_GEAR_Lever_Gear_02</NODE_ID>
+		<TOOLTIPID>%((A:GEAR HANDLE POSITION, percent) 50 &gt;)%{if}TT:COCKPIT.TOOLTIPS.LANDING_GEAR_DN %{else}TT:COCKPIT.TOOLTIPS.LANDING_GEAR_UP %{end}</TOOLTIPID>
+		</UseTemplate>
+	</Component>
+	
+	<!-- CHECK_FIRE_WARNING ###############################-->
+	<Component ID="TEST_FIRE_WARNING">
+
+				<Component ID="TEST_FIRE_WARNING_KNOB" Node="x0_btm_test_fire_warning_00">
+
+					<UseTemplate Name="ASOBO_ELECTRICAL_Base_Template">
+						<IE_NAME>btm_test_fire_warning_00</IE_NAME>
+						<NODE_ID>x0_btm_test_fire_warning_00</NODE_ID>
+						<PART_ID>test_fire_warning</PART_ID>
+						<ANIM_NAME>btm_test_fire_warning_00</ANIM_NAME>
+						<ANIM_LENGTH>40</ANIM_LENGTH>
+						<INTERACTION_TYPE>Switch</INTERACTION_TYPE>
+						<TT_ICON>PUSH</TT_ICON>
+						<TOOLTIP_TITLE>COCKPIT.TOOLTIPS.TESTSWITCH_FIREDETECT_OFF</TOOLTIP_TITLE>
+						<SET_STATE_ON>
+							1 (&gt;L:XMLVAR_btm_test_fire_warning_00)
+						</SET_STATE_ON>
+						<SET_STATE_OFF>
+							1 (&gt;L:XMLVAR_btm_test_fire_warning_00) 
+						</SET_STATE_OFF>
+						<GET_STATE_EXTERNAL>(L:XMLVAR_btm_test_fire_warning_00, Bool) sp0</GET_STATE_EXTERNAL>
+						<TT_VALUE>(L:XMLVAR_btm_test_fire_warning_00) @TT_OnOff_Cond</TT_VALUE>
+						<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+						<GET_INIT_STATE_EXTERNAL>(L:XMLVAR_btm_test_fire_warning_00, Bool)</GET_INIT_STATE_EXTERNAL>
+						<WWISE_EVENT_1>fire_test_SWITCH_ON</WWISE_EVENT_1>
+						<WWISE_EVENT_2>fire_test_SWITCH_OFF</WWISE_EVENT_2>
+					</UseTemplate>
+				</Component>
+
+				<Component ID="CHECK_FIRE_WARNING_KNOB" Node="x0_btm_fire_warning_00">
+
+					<UseTemplate Name="ASOBO_ELECTRICAL_Base_Template">
+						<IE_NAME>btm_fire_warning_00</IE_NAME>
+						<NODE_ID>x0_btm_fire_warning_00</NODE_ID>
+						<PART_ID>fire_warning_quit</PART_ID>
+						<ANIM_NAME>btm_fire_warning_00</ANIM_NAME>
+						<ANIM_LENGTH>40</ANIM_LENGTH>
+						<TT_ICON>PUSH</TT_ICON>
+						<INTERACTION_TYPE>Switch</INTERACTION_TYPE>
+						<TOOLTIP_TITLE>COCKPIT.TOOLTIPS.TESTSWITCH_FIREDETECT_ON</TOOLTIP_TITLE>
+						<SET_STATE_ON>
+							0 (&gt;L:XMLVAR_btm_test_fire_warning_00)
+						</SET_STATE_ON>
+						<SET_STATE_OFF>
+							0 (&gt;L:XMLVAR_btm_test_fire_warning_00) 
+						</SET_STATE_OFF>
+						<GET_STATE_EXTERNAL>(L:XMLVAR_btm_test_fire_warning_00, Bool) sp0</GET_STATE_EXTERNAL>
+						<TT_VALUE>(L:XMLVAR_btm_test_fire_warning_00) @TT_OnOff_Cond</TT_VALUE>
+						<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+						<GET_INIT_STATE_EXTERNAL>(L:XMLVAR_btm_test_fire_warning_00, Bool)</GET_INIT_STATE_EXTERNAL>
+						<WWISE_EVENT_1>fire_qtest_SWITCH_ON</WWISE_EVENT_1>
+						<WWISE_EVENT_2>fire_qtest_SWITCH_OFF</WWISE_EVENT_2>
+					</UseTemplate>
+				</Component>
+				
+		<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<NODE_ID>x0_lamp_04</NODE_ID>
+				<EMISSIVE_CODE>(L:XMLVAR_btm_test_fire_warning_00, Bool)</EMISSIVE_CODE>
+				<BLINK>True</BLINK>
+				<BLINK_DURATION>(L:XMLVAR_btm_test_fire_warning_00, Bool) 50 *</BLINK_DURATION>
+		</UseTemplate>
+
+		
+				
+				<Component ID="TEST_FIRE_WARNING_rear" Node="x0_btm_test_fire_warning_01">
+
+					<UseTemplate Name="ASOBO_ELECTRICAL_Base_Template">
+						<IE_NAME>btm_test_fire_warning_00</IE_NAME>
+						<NODE_ID>x0_btm_test_fire_warning_01</NODE_ID>
+						<PART_ID>btm_test_fire_warning_01</PART_ID>
+						<ANIM_NAME>btm_test_fire_warning_00</ANIM_NAME>
+						<ANIM_LENGTH>40</ANIM_LENGTH>
+						<TT_ICON>PUSH</TT_ICON>
+						<INTERACTION_TYPE>Switch</INTERACTION_TYPE>
+						<TOOLTIPID>%push fire test%</TOOLTIPID>
+						<SET_STATE_ON>
+							1 (&gt;L:XMLVAR_btm_test_fire_warning_00)
+						</SET_STATE_ON>
+						<SET_STATE_OFF>
+							1 (&gt;L:XMLVAR_btm_test_fire_warning_00) 
+						</SET_STATE_OFF>
+						<GET_STATE_EXTERNAL>(L:XMLVAR_btm_test_fire_warning_00, Bool) sp0</GET_STATE_EXTERNAL>
+						<TT_VALUE>(L:XMLVAR_btm_test_fire_warning_00) @TT_OnOff_Cond</TT_VALUE>
+						<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+						<GET_INIT_STATE_EXTERNAL>(L:XMLVAR_btm_test_fire_warning_00, Bool)</GET_INIT_STATE_EXTERNAL>
+						<WWISE_EVENT_1>fire_test_SWITCH_ON</WWISE_EVENT_1>
+						<WWISE_EVENT_2>fire_test_SWITCH_OFF</WWISE_EVENT_2>
+					</UseTemplate>
+				</Component>
+		
+		
+	</Component>
+
+	<!--
+	<Component ID="LANDING_GEAR_ParkingBrake">
+		<UseTemplate Name="ASOBO_LANDING_GEAR_Switch_ParkingBrake_Template">
+			<ANIM_DELAY>0.25</ANIM_DELAY>
+			<TOOLTIPID>TT:COCKPIT.TOOLTIPS.PARKBRAKE_DRAG_UP_INFO</TOOLTIPID>
+			<INVERT_SWITCH_ON_CONDITION>True</INVERT_SWITCH_ON_CONDITION>
+			<INVERT_ANIM>True</INVERT_ANIM>
+		</UseTemplate>
+	</Component> -->
+	
+	  <!-- Engine and prop control ########################### -->
+		<Component ID="ENGINE">
+
+			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+					<NODE_ID>x0_light_alarm_red</NODE_ID>
+					<EMISSIVE_CODE>(L:FES_FCU_LIGHT_ALARM_RED, Bool)</EMISSIVE_CODE>
+					<BLINK>True</BLINK>
+					<BLINK_DURATION>(L:FES_FCU_LIGHT_ALARM_RED, Bool) 50 *</BLINK_DURATION>
+			</UseTemplate>
+
+	
+			<Update Frequency="1">
+				(L:FES_FCU_INST_KNOB_PUSH) 1 == if{
+						0 (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1)
+						0 (&gt;L:DG1001_ENGINE_THROTTLE)
+						0 (&gt;L:FES_FCU_INST_KNOB_ROTATE)
+						0 (&gt;L:LAST_KNOB)
+				}
+			</Update>
+	
+	
+			<Update Frequency="60">
+				(L:FES_MOTOR_ON) 1 == 
+				(A:AIRSPEED INDICATED, Knots) 43 &lt;= and
+				(A:AIRSPEED INDICATED, Knots) 86 &gt;= or if{
+					1 (&gt;L:FES_FCU_LIGHT_ALARM_RED, Boolean)
+				} els{ 
+					(A:CIRCUIT CONNECTION ON:13, Bool) 0 == if{
+						0 (&gt;L:FES_FCU_LIGHT_ALARM_RED, Boolean)
+						}
+					}
+			</Update>
+	
+
+		</Component>
+		
+<Component ID="Engine_Controls">
+
+				<!-- FCU FES Control_Mon -->
+		<Component ID="InputVars">
+			<Update Once="True">
+			<!--			
+				58.8 (&gt;L:FES_BATTERY_VOLTAGE:1,volts)
+				58.8 (&gt;L:FES_BATTERY_VOLTAGE:2,volts)	
+				-->
+				12.9 (&gt;L:FES_FCU_POWER_SUPPLY_VOLTAGE,volts)
+				(A:TOTAL AIR TEMPERATURE,celsius) 11 + s0 (&gt;L:FES_MOTOR_TEMPERATURE,celsius)
+				l0 (&gt;L:FES_CONTROLLER_TEMPERATURE,celsius)
+				l0 (&gt;L:FES_BATTERY_TEMPERATURE:1,celsius)
+				l0 (&gt;L:FES_BATTERY_TEMPERATURE:2,celsius)	
+				100 (&gt;L:FES_TOTAL_BATTERY_CHARGE,percent)				
+				4.0 (&gt;L:FES_BATTERY_CELL_MIN_VOLTAGE:1,volts)
+				4.1 (&gt;L:FES_BATTERY_CELL_MAX_VOLTAGE:1,volts)
+				4.0 (&gt;L:FES_BATTERY_CELL_MIN_VOLTAGE:2,volts)
+				4.1 (&gt;L:FES_BATTERY_CELL_MAX_VOLTAGE:2,volts)			
+				0 (&gt;L:FES_BATTERY_BUS_AMPS,amperes)
+				0 (&gt;L:FES_MOTOR_ON,bool)	
+				0 (&gt;L:FES_FCU_SWITCH_POWER, Bool) 
+				0 (&gt;A:CIRCUIT CONNECTION ON:13, Bool)
+				(L:FES_MOTOR_ON, bool) (&gt;L:DG1001_MOTOR_ON, bool)
+				0 (&gt;L:FCU ON, bool)
+				0 (&gt;A:CIRCUIT CONNECTION ON:12, Bool)
+			</Update>								
+			<Update>
+				<!-- For testing battery current
+					(A:GENERAL ENG THROTTLE LEVER POSITION:1,percent over 100) 134 * (&gt;A:ELECTRICAL GENALT LOAD:4,amperes)-->
+					<!---->
+					(L:FES_MOTOR_ON) 1 ==
+					(A:CIRCUIT CONNECTION ON:13, Bool) 1 == or if{
+					(A:GENERAL ENG THROTTLE LEVER POSITION:1,percent over 100) 138 * (&gt;L:FES_BATTERY_BUS_AMPS,amperes)
+					(A:GENERAL ENG THROTTLE LEVER POSITION:1,percent over 100) 138 * (&gt;A:ELECTRICAL BATTERY LOAD:3,amperes)
+					(A:GENERAL ENG THROTTLE LEVER POSITION:1,percent over 100) 138 * (&gt;A:ELECTRICAL BATTERY LOAD:4,amperes)
+					
+					(L:DG1001_Cabin_Air_1) &gt;= 20 if{
+						(L:DG1001_Cabin_Air_1) 0.1 * (&gt;L:DG1001_Motor_temp_down)
+						} els{ 
+							0 (&gt;L:DG1001_Motor_temp_down) 
+							}
+			
+					(A:TOTAL AIR TEMPERATURE,celsius) 21 + (A:GENERAL ENG THROTTLE LEVER POSITION:1,percent) 0.2 * + (L:DG1001_Motor_temp_down) - (&gt;L:FES_MOTOR_TEMPERATURE, celsius)
+							
+					(L:FES_MOTOR_TEMPERATURE, celsius) 12 - (&gt;L:FES_CONTROLLER_TEMPERATURE,celsius)
+					(L:FES_MOTOR_TEMPERATURE, celsius) 8 -  (&gt;L:FES_BATTERY_TEMPERATURE:1,celsius)
+					(L:FES_MOTOR_TEMPERATURE, celsius) 7 -  (&gt;L:FES_BATTERY_TEMPERATURE:2,celsius)
+					}
+					(A:ELECTRICAL BATTERY VOLTAGE:3,volts) 2 / (&gt;L:FES_BATTERY_VOLTAGE:1,volts)
+					(A:ELECTRICAL BATTERY VOLTAGE:4,volts) 2 / (&gt;L:FES_BATTERY_VOLTAGE:2,volts)
+					(L:DG1001_CANOPY, bool) 100 * (&gt;A:CANOPY OPEN,percent)
+					(A:GENERAL ENG RPM:1, rpm) (&gt;L:DG1001_ENGINE_RPM, rpm)
+					(L:FES_MOTOR_ON, bool) (&gt;L:DG1001_MOTOR_ON, bool)
+					(A:PROP ROTATION ANGLE:1, degrees) (&gt;L:DG1001_PROP_ANGLE, degrees)
+					(A:GENERAL ENG THROTTLE LEVER POSITION:1, percent) (&gt;L:DG1001_ENGINE_THROTTLE, percent)
+					(A:ELECTRICAL GENALT LOAD:4,amperes) (&gt;L:DG1001_BUS4_LOAD, amperes)
+
+			</Update>	
+		</Component>
+		
+		<Component ID="FCUSim">
+			<Update>
+
+				<!-- Calculate remaining time-->
+				(L:FES_FCU_SWITCH_POWER) 1 == if{
+					(L:FES_TOTAL_BATTERY_CHARGE,percent) 4200 * 100 / sp0 
+					(L:FES_MOTOR_ON) 1 ==
+					(A:CIRCUIT CONNECTION ON:13, Bool) 1 == or if{
+						(L:FES_BATTERY_VOLTAGE:1,volts) (L:FES_BATTERY_VOLTAGE:2,volts) + (L:FES_BATTERY_BUS_AMPS,amperes) *
+					} els{
+						4000
+					} sp1
+					l1 0 &gt; if{						
+						l0 l1 / 60 * 99 min
+					} els{						
+						99
+					}			
+					(&gt;L:FES_FCU_REMAINING_TIME,minutes)					
+				}
+				
+
+			</Update>
+		</Component>
+
+		<Component ID="Power_Stick_Select">	
+
+				<UseTemplate Name="ASOBO_ELECTRICAL_Base_Template">
+					<IE_NAME>ANIM_INST_SWITCH_POWER</IE_NAME>
+					<NODE_ID>x0_gauges_swt_00</NODE_ID>
+					<PART_ID>FCUSWITCHPOWER</PART_ID>
+					<ANIM_NAME>ANIM_INST_SWITCH_POWER</ANIM_NAME>
+					<ANIM_LENGTH>10</ANIM_LENGTH>
+					<INTERACTION_TYPE>Switch</INTERACTION_TYPE>
+					<!-- <TOOLTIP_TITLE>FCUPOWERON</TOOLTIP_TITLE>
+					<TT_DESCRIPTION_ID>#TT_SWITCH_ACTION#</TT_DESCRIPTION_ID>				
+					<TooltipText>Toggle</TooltipText> -->
+					<TOOLTIPID>%FCU POWER%</TOOLTIPID>
+					<SET_STATE_ON>
+						1 (&gt;A:CIRCUIT CONNECTION ON:12, Bool)
+						1 (&gt;A:FCU ON, Bool)
+						1 (&gt;L:FES_FCU_SWITCH_POWER, Bool)
+						1 (&gt;L:FES_FCU_EVENT_SWITCH_POWER)						
+						
+						0 (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1)
+						0 (&gt;L:DG1001_ENGINE_THROTTLE)
+						0 (&gt;L:FES_FCU_INST_KNOB_ROTATE)
+						0 (&gt;L:LAST_KNOB)
+						<!-- 
+						1 (&gt;A:ELECTRICAL MASTER BATTERY:4, Bool)
+						1 (&gt;L:FES_MOTOR_ON)	
+						1 (&gt;K:AUTOSTART)
+						-->
+					</SET_STATE_ON>
+					<SET_STATE_OFF>
+						0 (&gt;A:CIRCUIT CONNECTION ON:12, Bool)
+						0 (&gt;A:FCU ON, Bool)
+						0 (&gt;L:FES_FCU_SWITCH_POWER, Bool)
+						1 (&gt;L:FES_FCU_EVENT_SWITCH_POWER)
+						
+						0 (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1)
+						0 (&gt;L:DG1001_ENGINE_THROTTLE)
+						0 (&gt;L:FES_FCU_INST_KNOB_ROTATE)
+						0 (&gt;L:LAST_KNOB)
+					</SET_STATE_OFF>
+					<GET_STATE_EXTERNAL>(A:CIRCUIT CONNECTION ON:12, Bool) sp0</GET_STATE_EXTERNAL>
+					<TT_VALUE_OFF>%FCU off%</TT_VALUE_OFF>
+					<TT_VALUE_ON>%FCU on%</TT_VALUE_ON>
+					<GET_INIT_STATE_EXTERNAL>0</GET_INIT_STATE_EXTERNAL>
+					<WWISE_EVENT_1>FCU_SWITCH_ON</WWISE_EVENT_1>
+					<WWISE_EVENT_2>FCU_SWITCH_OFF</WWISE_EVENT_2>
+				</UseTemplate>
+			
+			
+		</Component>
+
+		<Component ID="LightAlarm" Node="x0_light_alarm">
+			<Visibility>
+				<Parameter>
+					<Code>
+					(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+					(L:FES_FCU_LIGHT_ALARM)
+					}
+					</Code>
+				</Parameter>
+			</Visibility>
+		</Component>
+		<Component ID="LightAlarmRed" Node="x0_light_alarm_red">
+			<Visibility>
+				<Parameter>
+					<Code>
+					(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+					(L:FES_FCU_LIGHT_ALARM_RED)
+					}
+					</Code>
+				</Parameter>
+			</Visibility>
+		</Component>
+		<Component ID="LightAlarmGreen" Node="x0_light_alarm_green">
+			<Visibility>
+				<Parameter>
+					<Code>
+					(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+					(L:FES_FCU_LIGHT_ALARM_GREEN)
+					}
+					</Code>
+				</Parameter>
+			</Visibility>
+		</Component>
+		<Component ID="LightOk" Node="x0_light_ok">
+			<Visibility>
+				<Parameter>
+					<Code>
+					(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+					(L:FES_FCU_LIGHT_OK)
+					}
+					</Code>
+				</Parameter>
+			</Visibility>
+		</Component>
+		<Component ID="LightOkRed" Node="x0_light_ok_red">
+			<Visibility>
+				<Parameter>
+					<Code>
+					(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+					(L:FES_FCU_LIGHT_OK_RED)
+					}
+					</Code>
+				</Parameter>
+			</Visibility>
+		</Component>
+		<Component ID="LightOkGreen" Node="x0_light_ok_green">
+			<Visibility>
+				<Parameter>
+					<Code>
+					(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+					(L:FES_FCU_LIGHT_OK_GREEN)
+					}
+					</Code>
+				</Parameter>
+			</Visibility>
+		</Component>
+		<Component ID="LightError" Node="x0_light_error">
+			<Visibility>
+				<Parameter>
+					<Code>
+					(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+					(L:FES_FCU_LIGHT_ERROR)
+					}
+					</Code>
+				</Parameter>
+			</Visibility>
+		</Component>
+		<Component ID="LightErrorRed" Node="x0_light_error_red">
+			<Visibility>
+				<Parameter>
+					<Code>
+					(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+					(L:FES_FCU_LIGHT_ERROR_RED)
+					}
+					</Code>
+				</Parameter>
+			</Visibility>
+		</Component>
+		<Component ID="LightErrorGreen" Node="x0_light_error_green">
+			<Visibility>
+				<Parameter>
+					<Code>
+					(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+					(L:FES_FCU_LIGHT_ERROR_GREEN)
+					}
+					</Code>
+				</Parameter>
+			</Visibility>
+		</Component>
+	<!--	-->
+		<Component ID="Knob" Node="Empty_Instrument_Knob_Push">
+            <UseTemplate Name="DG1001_FES_FCU_KNOB">
+            <NODE_ID>Empty_Instrument_Knob_Push</NODE_ID>
+            <ANIM_NAME>ANIM_INST_KNOB_ROTATE</ANIM_NAME>
+            <PUSH_ANIM_NAME>ANIM_INST_KNOB_PUSH</PUSH_ANIM_NAME>
+			<KNOB_WWISE_EVENT>fcu_knob</KNOB_WWISE_EVENT>
+            <KNOB_WWISE_COUNT>11</KNOB_WWISE_COUNT>
+            <PUSH_WWISE_EVENT_1>fcu_push_button_on</PUSH_WWISE_EVENT_1>
+            <PUSH_WWISE_EVENT_2>fcu_push_button_off</PUSH_WWISE_EVENT_2>
+            </UseTemplate>
+        </Component>
+
+
+			</Component> <!-- Engine-->
+
+<Component ID="Engine_Controls_Rear">
+
+		<Component ID="Power_Stick_Select_Rear" Node="x0_gauges_swt_01">			
+
+				<UseTemplate Name="ASOBO_ELECTRICAL_Base_Template">
+					<IE_NAME>ANIM_INST_SWITCH_POWER_rear</IE_NAME>
+					<NODE_ID>x0_gauges_swt_01</NODE_ID>
+					<PART_ID>x0_gauges_swt_01</PART_ID>
+					<ANIM_NAME>ANIM_INST_SWITCH_POWER</ANIM_NAME>
+					<ANIM_LENGTH>20</ANIM_LENGTH>
+					<INTERACTION_TYPE>Switch</INTERACTION_TYPE>
+					<!-- <TOOLTIP_TITLE>FCUPOWERON</TOOLTIP_TITLE>
+					<TT_DESCRIPTION_ID>#TT_SWITCH_ACTION#</TT_DESCRIPTION_ID>				
+					<TooltipText>Toggle</TooltipText> -->
+					<TOOLTIPID>%FCU POWER%</TOOLTIPID>
+					<SET_STATE_ON>
+						1 (&gt;A:CIRCUIT CONNECTION ON:12, Bool)
+						1 (&gt;A:FCU ON, Bool)
+						0 (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1,percent over 100)
+						1 (&gt;L:FES_FCU_SWITCH_POWER, Bool)
+						1 (&gt;L:FES_FCU_EVENT_SWITCH_POWER)
+						<!-- 
+						1 (&gt;A:ELECTRICAL MASTER BATTERY:4, Bool)
+						1 (&gt;L:FES_MOTOR_ON)	
+						1 (&gt;K:AUTOSTART)
+						-->
+					</SET_STATE_ON>
+					<SET_STATE_OFF>
+						0 (&gt;A:CIRCUIT CONNECTION ON:12, Bool)
+						0 (&gt;A:FCU ON, Bool)
+						0 (&gt;L:FES_FCU_SWITCH_POWER, Bool)
+						1 (&gt;L:FES_FCU_EVENT_SWITCH_POWER)
+					</SET_STATE_OFF>
+					<GET_STATE_EXTERNAL>(A:CIRCUIT CONNECTION ON:12, Bool) sp0</GET_STATE_EXTERNAL>
+					<TT_VALUE_OFF>%FCU off%</TT_VALUE_OFF>
+					<TT_VALUE_ON>%FCU on%</TT_VALUE_ON>
+					<GET_INIT_STATE_EXTERNAL>0</GET_INIT_STATE_EXTERNAL>
+					<WWISE_EVENT_1>FCU_SWITCH_ON</WWISE_EVENT_1>
+					<WWISE_EVENT_2>FCU_SWITCH_OFF</WWISE_EVENT_2>
+				</UseTemplate>
+			
+			
+		</Component>
+		
+		<Component ID="Knob_Rear" Node="Empty_Instrument_Knob_Push_01">
+            <UseTemplate Name="DG1001_FES_FCU_KNOB">
+            <NODE_ID>Empty_Instrument_Knob_Push_01</NODE_ID>
+            <ANIM_NAME>ANIM_INST_KNOB_ROTATE</ANIM_NAME>
+            <PUSH_ANIM_NAME>ANIM_INST_KNOB_PUSH</PUSH_ANIM_NAME>
+			<KNOB_WWISE_EVENT>fcu_knob</KNOB_WWISE_EVENT>
+            <KNOB_WWISE_COUNT>75</KNOB_WWISE_COUNT>
+            <PUSH_WWISE_EVENT_1>fcu_push_button_on</PUSH_WWISE_EVENT_1>
+            <PUSH_WWISE_EVENT_2>fcu_push_button_off</PUSH_WWISE_EVENT_2>
+            </UseTemplate>
+        </Component>
+		
+</Component> <!-- Engine Rear -->
+
+		<Component ID="LeftSide_Controls">
+
+			<!-- Tow cable release -->
+			<Component ID="HANDLING_Push_Tow_Release">
+				<CameraTitle>InstrumentsLeft</CameraTitle>
+			<UseTemplate Name="ASOBO_HANDLING_Push_Tow_Release">
+				<NODE_ID>HANDLING_Tow_Cable_1</NODE_ID>
+				<ANIM_NAME>HANDLING_Tow_Cable_1</ANIM_NAME>
+				<Part_ID>TOW</PART_ID>
+			</UseTemplate>
+			</Component>
+			<UseTemplate Name="ASOBO_HANDLING_Push_Tow_Release">
+				<NODE_ID>HANDLING_Tow_Cable_2</NODE_ID>
+				<ANIM_NAME>HANDLING_Tow_Cable_1</ANIM_NAME>
+				<Part_ID>TOW2</PART_ID>
+			</UseTemplate>
+			
+			<!-- Speed brakes lever -->
+			<Component ID="Speed_Brakes">
+				<Component ID="HANDLING_LEVER_Spoilers_front">
+				<CameraTitle>InstrumentsLeft</CameraTitle>
+					<UseTemplate Name="ASOBO_HANDLING_Lever_Spoilers_Template">
+						<NODE_ID>HANDLING_Handle_Air_Brake_1</NODE_ID>
+						<ANIM_NAME>HANDLING_Handle_Air_Brake_1</ANIM_NAME>
+						<Part_ID>SPOILER</PART_ID>
+					</UseTemplate>
+				</Component>
+				 <Component ID="Brake_Me">
+						<Update Frequency="15">
+							(A:SPOILERS HANDLE POSITION, percent) 90 &gt;= if{
+								15000 (&gt;A:BRAKE RIGHT POSITION, Position 32k)
+							<!--	(A:SPOILERS HANDLE POSITION, Position 16k) + @16k min 0 max (&gt;K:SPOILERS_SET) -->
+							} els{
+								0 (&gt;A:BRAKE RIGHT POSITION, Position 32k)
+							}
+						</Update>
+					</Component>
+			</Component>
+			
+				<Component ID="Speed_Brake_Handle_Rear">
+					<UseTemplate Name="ASOBO_HANDLING_Lever_Spoilers_Template">
+						<NODE_ID>HANDLING_Handle_Air_Brake_2</NODE_ID>
+						<ANIM_NAME>HANDLING_Handle_Air_Brake_1</ANIM_NAME>
+					</UseTemplate>
+				</Component>
+			
+
+			<!-- Trim lever -->
+			<Component ID="HANDLING_Wheel_ElevatorTrim">
+				<CameraTitle>InstrumentsLeft</CameraTitle>
+				<UseTemplate Name="ASOBO_HANDLING_Wheel_ElevatorTrim_Template">
+					<NODE_ID>HANDLING_Lever_Trim_1</NODE_ID>
+					<ANIM_NAME>HANDLING_Lever_Trim_1</ANIM_NAME>
+					<Part_ID>TRIM</PART_ID>
+				</UseTemplate>
+			</Component>
+			<UseTemplate Name="ASOBO_HANDLING_Wheel_ElevatorTrim_Template">
+				<NODE_ID>HANDLING_Lever_Trim_2</NODE_ID>
+				<ANIM_NAME>HANDLING_Lever_Trim_2</ANIM_NAME>
+			</UseTemplate>
+
+		</Component>
+
+		
+	<Component ID="RightSide_Controls">
+			<!-- Water ballast command -->
+			<UseTemplate Name="ASOBO_HANDLING_Switch_Water_Ballast_Template">
+				<NODE_ID>HANDLING_Lever_Water_Ballast_1</NODE_ID>
+				<PART_ID>BALLAST</PART_ID>
+				<ANIM_NAME>HANDLING_Lever_Water_Ballast_1</ANIM_NAME>
+				<TOOLTIPID>%Fin Ballast%</TOOLTIPID>
+				<BALLAST_VALVE_ID_1>1</BALLAST_VALVE_ID_1>
+				<ON_STATE_CHANGED_EXTERNAL_CODE>
+				p0 ! if{ 
+					0 (&gt;B:HANDLING_Glider_Switch_Water_Ballast_2_Set) 
+					0 (&gt;B:HANDLING_Glider_Switch_Water_Ballast_3_Set) 
+				}
+				</ON_STATE_CHANGED_EXTERNAL_CODE>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_HANDLING_Switch_Water_Ballast_Template">
+				<NODE_ID>HANDLING_Lever_Water_Ballast_Other_1</NODE_ID>
+				<PART_ID>BALLASTOTHER</PART_ID>
+				<ANIM_NAME>HANDLING_Lever_Water_Ballast_Other_1</ANIM_NAME>
+				<TOOLTIPID>%Right Ballast%</TOOLTIPID>
+				<BALLAST_VALVE_ID_1>1</BALLAST_VALVE_ID_1>
+				<BALLAST_VALVE_ID_2>2</BALLAST_VALVE_ID_2>
+
+				<ID>2</ID>
+				<ON_STATE_CHANGED_EXTERNAL_CODE>p0 if{ 1 (&gt;B:HANDLING_Glider_Switch_Water_Ballast_1_Set) }</ON_STATE_CHANGED_EXTERNAL_CODE>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_HANDLING_Switch_Water_Ballast_Template">
+				<NODE_ID>HANDLING_Lever_Water_Ballast_Other_2</NODE_ID>
+				<PART_ID>HANDLING_Lever_Water_Ballast_Other_2</PART_ID>
+				<ANIM_NAME>HANDLING_Lever_Water_Ballast_Other_2</ANIM_NAME>
+				<TOOLTIPID>%Left Ballast%</TOOLTIPID>
+				<BALLAST_VALVE_ID_1>1</BALLAST_VALVE_ID_1>
+				<BALLAST_VALVE_ID_2>3</BALLAST_VALVE_ID_2>
+				<ID>3</ID>
+				<ON_STATE_CHANGED_EXTERNAL_CODE>p0 if{ 1 (&gt;B:HANDLING_Glider_Switch_Water_Ballast_1_Set) }</ON_STATE_CHANGED_EXTERNAL_CODE>
+			</UseTemplate> 
+
+			<!-- PASSENGERS ########################### -->
+			<Component ID="PASSENGERS">
+				<Parameters Type="Override">
+					<INVERT_IM_DRAG_INPUT_SCALAR>True</INVERT_IM_DRAG_INPUT_SCALAR>
+				</Parameters>
+				<UseTemplate Name="ASOBO_PASSENGER_Lever_Cabin_Air_Template">
+					<NODE_ID>PASSENGER_Switch_Cabin_Air_1</NODE_ID>
+					<ANIM_NAME>PASSENGER_Switch_Cabin_Air_1</ANIM_NAME>
+					<PART_ID>FES_AND_CABIN_AIR</PART_ID>
+
+				</UseTemplate>
+					
+					<Update Frequency = "15">		
+							(B:PASSENGER_Cabin_Air_1_Set) (&gt;L:DG1001_Cabin_Air_1)
+					</Update>
+			</Component>
+
+			<Component ID="PEDALS_ADJUSTED">
+
+					<UseTemplate Name="ASOBO_PASSENGER_Cabin_Base_Template">
+						<IE_ID>PEDAL_SWITCH</IE_ID>
+						<ANIM_LENGTH>100</ANIM_LENGTH>
+						<INTERACTION_TYPE>Lever</INTERACTION_TYPE>
+						<NODE_ID>x0_lever_14</NODE_ID>
+						<ANIM_NAME>x0_lever_14</ANIM_NAME>
+						<PART_ID>PEDAL_SWITCH</PART_ID>
+						<TOOLTIP_TITLE>AIRCRAFT.COMPONENT.PEDAL_SWITCH_ACTION</TOOLTIP_TITLE>
+						<TT_DESCRIPTION_ID>AIRCRAFT.COMPONENT.PEDAL_SWITCH_TITLE</TT_DESCRIPTION_ID>
+						<!-- <TOOLTIPID>%PEDAL ADJUSTMENT%</TOOLTIPID> -->
+						<WWISE_PREFIX>PEDAL</WWISE_PREFIX>
+					</UseTemplate>	
+			</Component>
+
+	</Component>
+
+
+		<Component ID="Center_Panel">
+		
+			<Component ID="Buttons">
+				<!-- Battery 
+				<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template">
+					<NODE_ID>INSTRUMENT_Switch_Batt</NODE_ID>
+					<ANIM_NAME>INSTRUMENT_Switch_Batt</ANIM_NAME>
+				</UseTemplate>
+				-->
+				<!-- Battery Swap -->
+				<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Swap_Bus_Template">
+					<NODE_ID>INSTRUMENT_Switch_Batt</NODE_ID>
+					<ANIM_NAME>INSTRUMENT_Switch_Batt</ANIM_NAME>
+					<SOURCE_BUS_ID_1>6</SOURCE_BUS_ID_1>
+					<TARGET_BUS_ID_1>1</TARGET_BUS_ID_1>
+					<SOURCE_BUS_ID_2>7</SOURCE_BUS_ID_2> 
+					<TARGET_BUS_ID_2>1</TARGET_BUS_ID_2>
+					<TOOLTIP_TITLE>@TT_Package.ELECTRICAL_SWITCH_BATTERY_STANDBY_ACTION</TOOLTIP_TITLE>
+					<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_SWITCH_BATTERY_STANDBY_ACTION</TT_DESCRIPTION_ID>	
+					<INVERT_ANIM>True</INVERT_ANIM>
+				</UseTemplate>
+				
+				<!-- Main Switch -->
+				<UseTemplate Name="DG1001E_NEO_IE_SWITCH_2STATE">
+					<IE_NAME>Main_Switch</IE_NAME>
+					<NODE_ID>INSTRUMENT_Switch_Avionic</NODE_ID>
+					<PART_ID>MAIN_SWITCH</PART_ID>
+					<ANIM_NAME>INSTRUMENT_Switch_Avionic</ANIM_NAME>
+					<WWISE_PREFIX>main</WWISE_PREFIX>
+					<TOOLTIP_TITLE>AIRCRAFT.COMPONENT.MAIN_SWITCH_TITLE</TOOLTIP_TITLE>
+					<TT_DESCRIPTION_ID>AIRCRAFT.COMPONENT.MAIN_SWITCH_ACTION</TT_DESCRIPTION_ID>
+					<TT_ICON>MOVE_Y</TT_ICON>
+					<INVERTED_LOGIC>True</INVERTED_LOGIC>
+					<VARNAME>A:BUS BREAKER PULLED:1, Bool</VARNAME>
+				</UseTemplate>
+				
+				<!-- FLARM -->
+				<UseTemplate Name="ASOBO_ELECTRICAL_Base_Template">
+					<IE_NAME>ANIM_INST_SWITCH_FLARM</IE_NAME>
+					<NODE_ID>swt_flarm_00</NODE_ID>
+					<PART_ID>swt_flarm</PART_ID>
+					<ANIM_NAME>swt_flarm_00</ANIM_NAME>
+					<ANIM_LENGTH>100</ANIM_LENGTH>
+					<INTERACTION_TYPE>Switch</INTERACTION_TYPE>
+
+					<TOOLTIPID>%FLARM%</TOOLTIPID>
+					<SET_STATE_ON>
+						1 (&gt;L:DG_SWITCH_FLARM, Bool)
+					</SET_STATE_ON>
+					<SET_STATE_OFF>
+						0 (&gt;L:DG_SWITCH_FLARM, Bool)
+					</SET_STATE_OFF>
+					<GET_STATE_EXTERNAL>(&gt;L:DG_SWITCH_FLARM, Bool) sp0</GET_STATE_EXTERNAL>
+					<TT_VALUE_OFF>%FLARM off%</TT_VALUE_OFF>
+					<TT_VALUE_ON>%FLARM on%</TT_VALUE_ON>
+					<GET_INIT_STATE_EXTERNAL>0</GET_INIT_STATE_EXTERNAL>
+					<WWISE_EVENT_1>FLARM_SWITCH_ON</WWISE_EVENT_1>
+					<WWISE_EVENT_2>FLARM_SWITCH_OFF</WWISE_EVENT_2>
+				</UseTemplate>		
+
+			</Component>	
+
+		<Component ID="DG1001_ACL_STROBE">
+				<!-- ACL -->
+			<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Strobe_Template">
+				<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_STROBE_ACTION</TT_DESCRIPTION_ID>
+				<TOOLTIP_TITLE>@TT_Package.LIGHTING_SWITCH_LIGHT_STROBE_TITLE</TOOLTIP_TITLE> 
+				<PART_ID>ACL_SWITCH</PART_ID>
+			</UseTemplate>				
+		</Component>
+
+		
+
+
+
+		<Component ID="FIN_TRIM_CHECK">
+				<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+						<NODE_ID>x0_lamp_Kasten_00</NODE_ID>
+						<PART_ID>FIN_TRIM_CHECK_OK</PART_ID>
+						<EMISSIVE_CODE>(L:DG_SWITCH_ACL, Bool)</EMISSIVE_CODE>
+				</UseTemplate>
+		</Component>
+				
+
+		<Component ID="ENGINE_Switch_FES">
+			<UseTemplate Name="DG1001_Covered_Switch">
+			    <NODE_ID>Engine_Switch_FES</NODE_ID>
+				<SWITCH_ANIM_NAME>FES_Switch</SWITCH_ANIM_NAME>
+				<COVER_ANIM_NAME>FES_Cover</COVER_ANIM_NAME>
+				<COVER_NODE_ID>FES_Cover</COVER_NODE_ID>
+				<SWITCH_NODE_ID>FES_Switch</SWITCH_NODE_ID>
+			</UseTemplate>
+		</Component>
+
+		<Component ID="ENGINE_Switch_FES_02">
+			<UseTemplate Name="DG1001_Covered_Switch">
+				<SWITCH_ANIM_NAME>FES_Switch</SWITCH_ANIM_NAME>
+				<COVER_ANIM_NAME>FES_Cover</COVER_ANIM_NAME>
+				<COVER_NODE_ID>FES_02_Cover</COVER_NODE_ID>
+				<SWITCH_NODE_ID>FES_02_Switch</SWITCH_NODE_ID>
+			</UseTemplate>
+		</Component>
+
+
+
+			<Component ID="Rudders">
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>Rudder_Pedal</ANIM_NAME>
+					<ANIM_CODE>
+						(A:RUDDER PEDAL POSITION, percent) 2 / 50 +
+					</ANIM_CODE>
+				</UseTemplate>
+			</Component>
+
+			<!-- Yoke -->
+			<Component ID="Yoke_Front">
+			<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+				<ANIM_NAME_YOKE_X>HANDLING_YOKE_Lever_StickLR</ANIM_NAME_YOKE_X>
+				<ANIM_NAME_YOKE_Y>HANDLING_Yoke_Lever_StickForeAft</ANIM_NAME_YOKE_Y>
+				<NODE_ID>Yoke_front_01</NODE_ID>
+				<PART_ID>YOKEFRONT</PART_ID>
+				<YOKE_NODE_ID>Yoke_front_01</YOKE_NODE_ID>
+				<HIGHLIGHT_NODE_ID>ArmatureYoke</HIGHLIGHT_NODE_ID>
+				<YOKE_HIDER_NODE_ID>YOKE_VISIBILITY_1</YOKE_HIDER_NODE_ID>
+			</UseTemplate>
+			</Component>
+
+	
+			
+			
+			
+			<Component ID="Gauges">
+			
+				<!-- Airspeed -->
+				<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Airspeed_Template">
+					<NODE_ID>INSTRUMENT_Airspeed_Needle_1</NODE_ID>
+					<ANIM_NAME>INSTRUMENT_Airspeed_Needle_1</ANIM_NAME>
+					<UNITS>kph</UNITS>
+					<MIN_VALUE>0</MIN_VALUE>
+					<MAX_VALUE>300</MAX_VALUE>
+					<Part_ID>SPEED</PART_ID>
+				</UseTemplate>
+
+				<!-- Compass 	-->
+			<Component ID="Compass">
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>ANIM_COMPASS_ROTZ</ANIM_NAME>
+					<ANIM_CODE> <!-- [0-360] -> [0-100] -->
+						(A:PLANE HEADING DEGREES MAGNETIC, degrees) 3.6 /
+					</ANIM_CODE> 
+				</UseTemplate>
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>ANIM_COMPASS_ROTY</ANIM_NAME>
+					<ANIM_CODE>
+						(A:PLANE BANK DEGREES, degrees) 1 * 50 +
+					</ANIM_CODE> 
+				</UseTemplate>
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>ANIM_COMPASS_ROTX</ANIM_NAME>
+					<ANIM_CODE>
+						(A:PLANE PITCH DEGREES, degrees) 1 * 50 +
+					</ANIM_CODE> 
+				</UseTemplate>
+			</Component>
+			
+
+
+			<!-- Accelerometer -->
+			<Component ID="Accelerometer">
+					<UseTemplate Name="ASOBO_INSTRUMENT_Accelerometer_Template">
+						<MAX_VALUE>10</MAX_VALUE>
+						<MIN_VALUE>-10</MIN_VALUE>
+						<ANIM_NAME>Pitt_Niddl_01</ANIM_NAME>
+						<NO_KNOB>true</NO_KNOB>
+					</UseTemplate>
+			</Component>
+				
+				<!-- Altimeter -->
+			<Component ID="Altimeter">
+				<UseTemplate Name="ASOBO_INSTRUMENT_Altimeter_Template">
+					<ID>1</ID>
+					<ANIM_WRAP>True</ANIM_WRAP>
+					<NEEDLE_10000_FEET>False</NEEDLE_10000_FEET>
+					<KNOB_ANIM_NAME>INSTRUMENT_Knob_Altimeter_1</KNOB_ANIM_NAME>
+					<KNOB_NODE_ID>INSTRUMENT_Knob_Altimeter_1</KNOB_NODE_ID>
+					<PART_ID>ALT</PART_ID>
+					<NODE_ID_STRIP>INSTRUMENT_Altimeter_Strip_1</NODE_ID_STRIP>
+					<ANIM_NAME_STRIP>INSTRUMENT_Altimeter_Strip_1</ANIM_NAME_STRIP>
+					<HIGHLIGHT_NODE_ID>INSTRUMENT_Knob_Altimeter_1</HIGHLIGHT_NODE_ID>
+					<NEEDLES_UNIT>meters</NEEDLES_UNIT>
+					<MIN_VALUE_STRIP>28</MIN_VALUE_STRIP>
+					<MAX_VALUE_STRIP>32.01</MAX_VALUE_STRIP>
+					<MIN_VALUE_KNOB>28</MIN_VALUE_KNOB>
+					<MAX_VALUE_KNOB>32.01</MAX_VALUE_KNOB>
+				</UseTemplate>
+			</Component>
+				
+			</Component>
+		
+		
+
+		
+			<Component ID="Glasscockpits">
+				<!-- Glasscockpit Vario -->
+				<Component ID="AS8_1">
+					<UseTemplate Name="ASOBO_Vario_AS8_Template">		
+						<ID>1</ID>
+					</UseTemplate>
+				</Component>
+				
+				<Component ID="AS8_2">
+					<UseTemplate Name="ASOBO_Vario_AS8_Template">	
+						<ID>2</ID>
+					</UseTemplate>
+				</Component>
+				
+				<!-- Vertical speed -->
+				<Component ID="avario_1">
+				<UseTemplate Name="ASOBO_INSTRUMENT_Needle_VerticalSpeed_Template">
+					<NODE_ID>INSTRUMENT_Needle_AnalogVario</NODE_ID>
+					<ANIM_NAME>INSTRUMENT_Needle_AnalogVario_1</ANIM_NAME>
+					<MAX_VALUE>5</MAX_VALUE>
+					<UNITS>m/s</UNITS>
+				</UseTemplate>
+				</Component>
+
+		<!-- ACD57 Radio -->
+				<Component ID="ACD57_01">
+					<UseTemplate Name="DG1001_ACD57_Template">
+						<ID>1</ID>	
+						<RADIO_INDEX>1</RADIO_INDEX>
+						<XPDR_INDEX>1</XPDR_INDEX>
+						<SUFFIX>_01</SUFFIX>
+					</UseTemplate>
+				</Component>
+				
+				<Component ID="ACD57_02">
+					<UseTemplate Name="DG1001_ACD57_Template">
+						<ID>2</ID>		
+						<RADIO_INDEX>1</RADIO_INDEX>
+						<XPDR_INDEX>1</XPDR_INDEX>
+						<SUFFIX>_02</SUFFIX>
+						<SCREEN>ACD57_Screen_02</SCREEN>
+						<BUTTON_0>ACD57_Button_1_02</BUTTON_0>
+						<BUTTON_1>ACD57_Button_2_02</BUTTON_1>
+						<BUTTON_2>ACD57_Button_3_02</BUTTON_2>
+						<BUTTON_3>ACD57_Button_4_02</BUTTON_3>
+						<KNOB_OUTER>ACD57_OuterKnob_02</KNOB_OUTER>
+						<KNOB_INNER>ACD57_InnerKnob_02</KNOB_INNER>
+					</UseTemplate>
+				</Component>
+
+		<!-- Glasscockpit FES_FCU   -->
+				
+			<Component ID="FES_FCU_01" Node="FES_FCU_Screen_01">
+			<UseTemplate Name="ASOBO_GT_Emissive_Gauge">
+				<PART_ID>FCU_SCREEN</PART_ID>
+							<EMISSIVE_CODE>
+						(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+							(L:FSS_EXX_EFB_GV_BRIGHTNESS) (L:FSS_EXX_EFB_GV_BRIGHTNESS) * sp0
+							2 0.25 - l0 * 0.25 + 0.25 max 2 min
+							} els{ 0}
+						</EMISSIVE_CODE>				
+			</UseTemplate>
+			</Component>
+				
+			<Component ID="FES_FCU_02" Node="FES_FCU_Screen_02">
+			<UseTemplate Name="ASOBO_GT_Emissive_Gauge">
+							<EMISSIVE_CODE>
+						(A:CIRCUIT AVIONICS ON, Bool) 1 == if{
+							(L:FSS_EXX_EFB_GV_BRIGHTNESS) (L:FSS_EXX_EFB_GV_BRIGHTNESS) * sp0
+							2 0.25 - l0 * 0.25 + 0.25 max 2 min
+							} els{ 0}
+						</EMISSIVE_CODE>
+			</UseTemplate>
+			</Component>
+				
+				
+		<!-- Glasscockpit MFD9000   -->
+				
+				<Component ID="AS9070_01">
+					<UseTemplate Name="ASOBO_AS9070_Template">
+						<ID>1</ID>				
+			<BUTTON_0>Button1_1</BUTTON_0>
+			<BUTTON_1>Button2_1</BUTTON_1>
+			<BUTTON_2>Button3_1</BUTTON_2>
+			<BUTTON_3>Button_Power_1</BUTTON_3>
+			<BUTTON_4>Button5_1</BUTTON_4>
+			<BUTTON_5>Button6_1</BUTTON_5>
+			<BUTTON_6>Button7_1</BUTTON_6>
+			<BUTTON_7>Button8_1</BUTTON_7>
+			<KNOB_0>Knob_Display_1</KNOB_0>
+			<KNOB_1>Knob_Move_1</KNOB_1>
+			<KNOB_2>Knob_Search_1</KNOB_2>
+			<KNOB_3>Knob_VOLUME_1</KNOB_3>
+			<TT_VALUE_3>(L:XMLVAR_VARIOMETER_VOLUME) '%d%%' @sprintf</TT_VALUE_3>
+			<TT_VALUE_IS_DYNAMIC_3>True</TT_VALUE_IS_DYNAMIC_0>
+			<TT_VALUE_2>(L:LX_KNOB_4) '%.1fNM' @sprintf</TT_VALUE_2>
+			<TT_VALUE_IS_DYNAMIC_2>True</TT_VALUE_IS_DYNAMIC_2>
+						<SCREEN>x0_MFD9k_Screen_01</SCREEN>
+					</UseTemplate>
+				</Component>
+
+		</Component>
+	</Component>
+	
+	<Component ID="AS9070_volume">
+				<UseTemplate Name="ASOBO_GT_Highlight_Template">
+					<HIGHLIGHT_NODE_ID>Knob_VOLUME_1_helper</HIGHLIGHT_NODE_ID>
+					<PART_ID>MFD9070Vol</PART_ID>
+				</UseTemplate>
+	</Component>
+		
+		
+		<Component ID="Canopy">
+			<PARTID>CanopeHandle</PARTID>
+			<UseInputEvent ID="DG1001E_NEO_TOOLTIP_EVENT">
+					<PRESET_NAME>Canopy_Handle</PRESET_NAME>
+					<TT_ICON>MOVE_Y</TT_ICON>
+					<TT_INTERACTION>PRIMARY_DOWN</TT_INTERACTION>		
+					<TT_DESCRIPTION>'Open / Close Canopy'</TT_DESCRIPTION>
+					<TT_VALUE>(A:INTERACTIVE POINT OPEN:1, percent over 100) 0.2 &gt; if{ 'Open' } els{ 'Closed' }</TT_VALUE>
+				</UseInputEvent>
+				<Parameters>
+					<TOOLTIP_TITLE_IS_DYNAMIC>True</TOOLTIP_TITLE_IS_DYNAMIC>											
+					<TOOLTIP_TITLE>'CANOPY HANDLE'</TOOLTIP_TITLE>
+					<TOOLTIP_ENTRY_0>Canopy_Handle</TOOLTIP_ENTRY_0>
+					<LEFT_SINGLE_CODE>
+						(A:SIM ON GROUND, bool) 0 &gt; if{
+							(A:INTERACTIVE POINT GOAL:1, percent over 100) ! (&gt;A:INTERACTIVE POINT GOAL:1, percent over 100)
+						} els{
+							0 (&gt;A:INTERACTIVE POINT GOAL:1, percent over 100)
+						}
+					</LEFT_SINGLE_CODE>
+				</Parameters>
+				<Component ID="dghandle_canopy_front" Node="handle_canopy_front">			
+					<UseTemplate Name="ASOBO_GT_Interaction_LeftSingle_Code">				
+					</UseTemplate>
+				</Component>
+			
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>canope_front_open</ANIM_NAME>
+					<ANIM_CODE>
+						(A:INTERACTIVE POINT OPEN:1, percent over 100) 100 *
+					</ANIM_CODE>
+				</UseTemplate>
+			
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>canopy_animation_handle</ANIM_NAME>
+					<ANIM_CODE>
+						(A:INTERACTIVE POINT OPEN:1, percent over 100) 100 *
+					</ANIM_CODE>
+				</UseTemplate>
+
+				<!-- DG1001_CANOPY -->
+        <Update Frequency = "15">		
+				(A:INTERACTIVE POINT OPEN:1, percent over 100) 0.2 &gt; if{ 
+					1 (&gt;L:DG1001_CANOPY, bool)
+						0 (&gt;A:GENERAL ENG THROTTLE LEVER POSITION:1)
+						0 (&gt;L:DG1001_ENGINE_THROTTLE)
+						0 (&gt;L:FES_FCU_INST_KNOB_ROTATE)
+						0 (&gt;L:LAST_KNOB)
+				} els{ 
+					0 (&gt;L:DG1001_CANOPY, bool)
+				}
+        </Update>
+		
+		</Component>
+		
+				
+		<Component ID="CanopyRear">
+			<UseInputEvent ID="DG1001E_NEO_TOOLTIP_EVENT">
+					<PRESET_NAME>Canopy_Handle_Rear</PRESET_NAME>
+					<TT_ICON>MOVE_Y</TT_ICON>
+					<TT_INTERACTION>PRIMARY_DOWN</TT_INTERACTION>		
+					<TT_DESCRIPTION>'Open / Close Canopy'</TT_DESCRIPTION>
+					<TT_VALUE>(A:INTERACTIVE POINT OPEN:2, percent over 100) 0.2 &gt; if{ 'Open' } els{ 'Closed' }</TT_VALUE>
+				</UseInputEvent>
+				<Parameters>
+					<TOOLTIP_TITLE_IS_DYNAMIC>True</TOOLTIP_TITLE_IS_DYNAMIC>											
+					<TOOLTIP_TITLE>'CANOPY HANDLE'</TOOLTIP_TITLE>
+					<TOOLTIP_ENTRY_0>Canopy_Handle</TOOLTIP_ENTRY_0>
+					<LEFT_SINGLE_CODE>
+						(A:SIM ON GROUND, bool) 0 &gt; if{
+							(A:INTERACTIVE POINT GOAL:2, percent over 100) ! (&gt;A:INTERACTIVE POINT GOAL:2, percent over 100)
+						} els{
+							0 (&gt;A:INTERACTIVE POINT GOAL:2, percent over 100)
+						}
+					</LEFT_SINGLE_CODE>
+				</Parameters>
+				<Component ID="x0_handle_canopy_rear_00" Node="x0_handle_canopy_rear_00">			
+					<UseTemplate Name="ASOBO_GT_Interaction_LeftSingle_Code">				
+					</UseTemplate>
+				</Component>
+			
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>canope_rear_open</ANIM_NAME>
+					<ANIM_CODE>
+						(A:INTERACTIVE POINT OPEN:2, percent over 100) 100 *
+					</ANIM_CODE>
+				</UseTemplate>
+			
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>canopy_animation_handle_rear</ANIM_NAME>
+					<ANIM_CODE>
+						(A:INTERACTIVE POINT OPEN:2, percent over 100) 100 *
+					</ANIM_CODE>
+				</UseTemplate>
+
+
+		</Component>
+		
+
+		
+		<Component ID="INOP">
+<!--
+			<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+					<NODE_ID>swt_flarm_00</NODE_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+					<NODE_ID>x0_swt_ALC_00</NODE_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+					<NODE_ID>x0_lamp_Kasten_00</NODE_ID>
+			</UseTemplate>
+-->
+		</Component>
+
+		<!--To be used in variometer sound event -->
+		<Component ID="BusBreakerPushed1">
+			<Update Frequency="15">
+				(A:BUS BREAKER PULLED:1, Bool) ! (&gt;L:XMLVAR_BUS_BREAKER_PUSHED_1)
+			</Update>
+		</Component>
+		
+		
+		
+	</Behaviors>
+
+	
+</ModelInfo>

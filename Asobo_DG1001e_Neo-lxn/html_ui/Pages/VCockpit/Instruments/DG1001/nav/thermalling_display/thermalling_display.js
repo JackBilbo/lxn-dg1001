@@ -161,7 +161,7 @@ class ThermallingDisplay {
             }           
 
             this.thermals_update_climb();
-            this.thermals_update_tru_avg(); 
+            this.thermals_update_tru_avg();           
         }
     }
 
