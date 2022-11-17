@@ -115,7 +115,7 @@ class navmap {
     update_map() {
 
         this.update_map_center();
-        // this.draw_courseline();
+        this.draw_courseline();
 
         if (B21_SOARING_ENGINE.task_active() && this.taskispainted == false) {
            this.draw_task();
@@ -123,10 +123,10 @@ class navmap {
 
         if(this.map_rotation == "northup") {
             document.getElementById("glidericon").style.transform = "rotate(" + SimVar.GetSimVarValue("A:PLANE HEADING DEGREES TRUE","degrees") + "deg)";
-            document.getElementById("Map").style.transform = "rotate(0deg) scale(2)";
+            document.getElementById("Map").style.transform = "rotate(0deg) scale(1.5)";
         } else {
             document.getElementById("glidericon").style.transform = "rotate(0deg)";
-            document.getElementById("Map").style.transform = "rotate(-" + SimVar.GetSimVarValue("A:PLANE HEADING DEGREES TRUE","degrees") + "deg) scale(2)";
+            document.getElementById("Map").style.transform = "rotate(-" + SimVar.GetSimVarValue("A:PLANE HEADING DEGREES TRUE","degrees") + "deg) scale(1.5)";
         }
 
         document.getElementById("ac_trk").style.transform = "rotate(" + (SimVar.GetSimVarValue("GPS GROUND TRUE TRACK","degrees") - SimVar.GetSimVarValue("A:PLANE HEADING DEGREES TRUE","degrees")) + "deg)"; 
@@ -376,14 +376,8 @@ class navmap {
     draw_courseline() {
         let targetcoords;
         
-        if(UI.pagepos_x == 0 && NAVPANEL.selectedAirport.coordinates.lat) { 
-            targetcoords = [[this.instrument.PLANE_POSITION.lat, this.instrument.PLANE_POSITION.long],[NAVPANEL.selectedAirport.coordinates.lat, NAVPANEL.selectedAirport.coordinates.long]];
-        } else if(UI.pagepos_x == 1) {
-            targetcoords = [[this.instrument.PLANE_POSITION.lat, this.instrument.PLANE_POSITION.long],[B21_SOARING_ENGINE.current_wp().position.lat, B21_SOARING_ENGINE.current_wp().position.long]];
-        } else {
-            return;
-        }
-
+        targetcoords = [[this.instrument.PLANE_POSITION.lat, this.instrument.PLANE_POSITION.long],[B21_SOARING_ENGINE.current_wp().position.lat, B21_SOARING_ENGINE.current_wp().position.long]];
+        
         if(this.courseline != null) {
             this.courseline.setLatLngs(targetcoords);
         } else {
@@ -394,9 +388,9 @@ class navmap {
             }).addTo(TOPOMAP);
         }
 
-        if(CONFIGPANEL.displayCoursePointer) {
-            this.updateCoursePointer(targetcoords)
-        }
+        
+        // this.updateCoursePointer(targetcoords)
+        
     }
 
     updateCoursePointer(targetcoords) {

@@ -1,3 +1,19 @@
+class B21_publisher extends BasePublisher {
+    constructor(bus, pacer = undefined) {
+        super(bus, pacer);
+    }
+
+    onupdate() {
+        console.log("B21 Publisher Update");
+        this.publishFinishHeight();
+    }
+
+    publishFinishHeight() {
+        let arr_agl = B21_SOARING_ENGINE.task.finish_wp().arrival_height_msl_m - (B21_SOARING_ENGINE.task.finish_wp().min_alt_m != null ? B21_SOARING_ENGINE.task.finish_wp().min_alt_m : B21_SOARING_ENGINE.task.finish_wp().alt_m);
+        console.log("PUB: " + arr_agl);
+        this.publish('b21_arr_height_agl', arr_agl);
+    }
+}
 
 
 let NAVMAP, TOPOMAP, LX;
@@ -10,6 +26,19 @@ class AS9070 extends ASShared {
         this.lift_dots = [];
         this.lift_dots_max = 40;
         this.showLiftdots = true;
+
+        this.backplane.addPublisher('b21_data', new B21_publisher(this.bus));
+
+        this.TIMER_1 = 0;
+
+        // Constants
+        this.MS_TO_KNOTS = 1.94384; // speed conversion consts
+        this.MS_TO_KPH = 3.6;    // meter per second to kilometer per hour
+        this.M_TO_FEET = 3.28084;   // meter to foot
+        this.M_TO_NM = 1 / 1852; // Meters to Nautical Miles.
+        this.M_TO_MILES = 1 / 1609.34; // Meters to Statute Miles
+        this.MS_TO_FPM = 196.85; // meter per second to foot per minute
+        this.RAD_TO_DEG = 57.295; // Radians to degrees
     }
     
     connectedCallback() {
@@ -60,6 +89,18 @@ class AS9070 extends ASShared {
     Update() {
         super.Update();
         this.TIME_S = SimVar.GetSimVarValue("E:SIMULATION TIME","seconds");
+        this.WIND_DIRECTION_DEG = SimVar.GetSimVarValue("A:AMBIENT WIND DIRECTION", "degrees");
+        this.WIND_SPEED_MS = SimVar.GetSimVarValue("A:AMBIENT WIND VELOCITY", "meters per second");
+        this.NETTO_MS = SimVar.GetSimVarValue("Z:B21_NETTO_MS","meters per second"); // From b21_soaring_engine_class
+        this.TE_MS = SimVar.GetSimVarValue("Z:B21_TE_MS", "number"); // From model xml
+        this.MACCREADY_MS = SimVar.GetSimVarValue("Z:B21_MACCREADY_MS", "meters per second");
+        this.PLANE_POSITION = this.get_position();
+        this.AIRSPEED_MS = SimVar.GetSimVarValue("A:AIRSPEED TRUE", "feet per second") / this.M_TO_FEET;
+        //this.ALTITUDE_M = SimVar.GetSimVarValue("A:INDICATED ALTITUDE", "feet") / this.M_TO_FEET;
+        this.ALTITUDE_M = SimVar.GetSimVarValue("A:PLANE ALTITUDE", "feet") / this.M_TO_FEET;
+
+        this.STF_SPEED_0_MS = SimVar.GetSimVarValue("VARIOMETER SPEED TO FLY:1","kilometers per hour") / this.MS_TO_KPH; // From LX_S100
+        this.STF_SINK_0_MS = -(this.STF_SPEED_0_MS / SimVar.GetSimVarValue("VARIOMETER SPEED TO FLY GLIDE RATIO:1","number")); // From LX_S100 (sink is negative)
         
         if(B21_SOARING_ENGINE.task_active() && !NAVMAP.map_instrument_loaded) {
             NAVMAP.load_map();
@@ -70,12 +111,13 @@ class AS9070 extends ASShared {
         }
 
         this.jbb_update_hawk();
-
+        this.updateDatafields();
 
         if(this.TIME_S - this.TIMER_1 > 1) {
             /* Stuff happening every second ********************************************************* */
             this.TIMER_1 = this.TIME_S;
             this.updateLiftdots();
+            
         }
 
         if(this.lift_dots_timer_prev == null) {
@@ -143,6 +185,101 @@ class AS9070 extends ASShared {
         return new LatLong(SimVar.GetSimVarValue("A:PLANE LATITUDE", "degrees latitude"),
             SimVar.GetSimVarValue("A:PLANE LONGITUDE", "degrees longitude"));
     }
+
+    builddatafields() {
+        document.querySelectorAll('.datafield').forEach(el => {
+            el.innerHTML = '<span class="label"></span><div class="value"><span class="number"></span><span class="unit"></span></div>';
+        })
+
+        this.feedData();
+    }
+
+    feedData() {
+        const windSub = this.bus.getSubscriber();
+        windSub.on('radio_alt').atFrequency(1).handle((v) => {
+            let alt = UnitType.FOOT.convertTo(v, UnitType.METER);
+            document.querySelector("#cell_0_5 .label").innerText = "ALT AGL";
+            document.querySelector("#cell_0_5 .number").innerText = alt.toFixed(0);
+            document.querySelector("#cell_0_5 .unit").innerText = "m";
+        });
+
+        const te = this.bus.getSubscriber();
+        te.on('total_energy').atFrequency(1).handle((v) => {
+            SimVar.SetSimVarValue("Z:B21_TE_MS","number", v)
+        })
+
+        const net = this.bus.getSubscriber();
+        net.on('netto').atFrequency(1).handle((v) => {
+              
+        })
+
+        const mc = this.bus.getSubscriber();
+        mc.on('mac_cready_setting').atFrequency(1).handle((v) => {
+              SimVar.SetSimVarValue("Z:B21_MACCREADY_MS","meters per second", v);
+        })
+
+        const stf = this.bus.getSubscriber();
+        stf.on('speed_to_fly').atFrequency(1).handle((v) => {
+            SimVar.SetSimVarValue("Z:B21_STF_SPEED_MS", "meters per second", v / this.MS_TO_KPH);
+            document.querySelector("#cell_0_6 .label").innerText = "STF";
+            document.querySelector("#cell_0_6 .number").innerText = v.toFixed(0);
+            document.querySelector("#cell_0_6 .unit").innerText = "kmh";
+        })
+
+        const stf_gr = this.bus.getSubscriber();
+        stf_gr.on('speed_to_fly_glide_ratio').atFrequency(1).handle((v) => {
+            document.querySelector("#cell_0_7 .label").innerText = "STF GR";
+            document.querySelector("#cell_0_7 .number").innerText = v.toFixed(0);
+            document.querySelector("#cell_0_7 .unit").innerText = ""; 
+        })
+  
+        const task_arr = this.bus.getSubscriber();
+        task_arr.on('b21_arr_height_agl').atFrequency(1).handle((v) => {
+            
+        })
+
+    }
+
+    updateDatafields() {
+        if(B21_SOARING_ENGINE.task_active()) {
+
+            document.querySelector("#cell_0_1 .label").innerText = "WP BRG";
+            document.querySelector("#cell_0_1 .number").innerText = (B21_SOARING_ENGINE.current_wp().bearing_deg).toFixed(0);
+            document.querySelector("#cell_0_1 .unit").innerText = "deg"; 
+
+            document.querySelector("#cell_0_2 .label").innerText = "WP DIST";
+            document.querySelector("#cell_0_2 .number").innerText = (B21_SOARING_ENGINE.current_wp().distance_m / 1000).toFixed(0);
+            document.querySelector("#cell_0_2 .unit").innerText = "km"; 
+        
+            document.querySelector("#cell_0_3 .label").innerText = "WP ETE";
+            document.querySelector("#cell_0_3 .number").innerText = (B21_SOARING_ENGINE.current_wp().ete_s / 60).toFixed(0);
+            document.querySelector("#cell_0_3 .unit").innerText = "min"; 
+        
+            document.querySelector("#cell_0_4 .label").innerText = "WP ARR AGL";
+            document.querySelector("#cell_0_4 .number").innerText = (B21_SOARING_ENGINE.current_wp().arrival_height_msl_m - B21_SOARING_ENGINE.current_wp().alt_m).toFixed(0);
+            document.querySelector("#cell_0_4 .unit").innerText = "m"; 
+
+            document.querySelector("#cell_0_8 .label").innerText = "FINISH";
+            document.querySelector("#cell_0_8 .number").innerText =  (B21_SOARING_ENGINE.task.finish_wp().arrival_height_msl_m - (B21_SOARING_ENGINE.task.finish_wp().min_alt_m != null ? B21_SOARING_ENGINE.task.finish_wp().min_alt_m : B21_SOARING_ENGINE.task.finish_wp().alt_m)).toFixed(0);
+            document.querySelector("#cell_0_8 .unit").innerText = "m"; 
+        
+            let tasktime;
+            if(!B21_SOARING_ENGINE.task_finished()) {
+                tasktime = B21_SOARING_ENGINE.task_time_s()
+            } else {
+                tasktime = B21_SOARING_ENGINE.task.finish_time_s - B21_SOARING_ENGINE.task.start_time_s;
+            }
+
+            let timefmt = DurationFormatter.create('{HH}:{mm}:{ss}', UnitType.SECOND, '--:--:--');
+            document.querySelector("#task-timer").innerText =  timefmt(tasktime);
+
+            document.querySelector("#task-wpt-name").innerText = "WPT: " + B21_SOARING_ENGINE.current_wp().name;
+        }
+        
+        
+
+    }
+
 
     addLiftdot() {
         let position = this.get_position();
@@ -313,9 +450,10 @@ class AS9070 extends ASShared {
     message_task_start(wp, start_local_time_s, start_alt_m) {
         // Display "TASK START" message
         let hl = "TASK STARTED ";
-        let t = this.displayValue(parseInt(start_local_time_s),"s","time_of_day")+"<br/>";
+        let timefmt = DurationFormatter.create('{HH}:{mm}:{ss}', UnitType.SECOND, '--:--:--');
+        let t = timefmt(start_local_time_s)+"<br/>";
         t += wp.name+"<br/>";
-        t += this.displayValue(start_alt_m,"m","alt") + this.units.alt.pref;
+        t += this.ALTITUDE_M.toFixed(0) + "m";
         // this.task_message(msg_str, 5); // Display start message for 5 seconds
         this.popalert(hl,t,5,"#26783c");
     }
@@ -323,9 +461,9 @@ class AS9070 extends ASShared {
     message_task_start_too_low(wp) {
         // Display started too low message
         let hl = "BAD START";
-        let msg_str = "<br/>" + this.displayValue(this.vars.alt.value,"feet","alt") + this.units.alt.pref;
+        let msg_str = "<br/>" + this.ALTITUDE_M + "m";
         msg_str += "<br/>&gt;&gt;&nbsp;TOO LOW&nbsp;&lt;&lt;";
-        msg_str += "<br/>MIN HEIGHT: " + this.displayValue(wp.min_alt_m,"m","alt") + this.units.alt.pref;
+        msg_str += "<br/>MIN HEIGHT: " + wp.min_alt_m.tofixed(0) + "m";
         // this.task_message(msg_str, 6, true); // Display start message for 5 seconds
         this.popalert(hl,msg_str,5,"#ff0000");
     }
@@ -333,9 +471,9 @@ class AS9070 extends ASShared {
     message_task_start_too_high(wp) {
         // Display started too low message
         let hl = "BAD START";
-        let msg_str = "<br/>" + this.displayValue(this.vars.alt.value,"feet","alt") + this.units.alt.pref;
+        let msg_str = "<br/>" + this.ALTITUDE_M + "m";;
         msg_str += "<br/>&gt;&gt;&nbsp;TOO HIGH&nbsp;&lt;&lt;";
-        msg_str += "<br/>MAX HEIGHT: " + this.displayValue(wp.max_alt_m,"m","alt") + this.units.alt.pref;
+        msg_str += "<br/>MAX HEIGHT: " + wp.min_alt_m.tofixed(0) + "m";
         // this.task_message(msg_str, 6, true); // Display start message for 5 seconds
         this.popalert(hl,msg_str,5,"#ff0000");
     }
@@ -353,10 +491,10 @@ class AS9070 extends ASShared {
     message_task_finish(wp, finish_speed_ms, completion_time_s) {
         // Display "TASK COMPLETED" message
         let hl = "TASK COMPLETED ";
-        let msg_str = this.displayValue(finish_speed_ms,"ms","speed")  + this.units.speed.pref; + "<br/>";
-        msg_str += this.displayValue(this.vars.localtime.value,"s","time_of_day")+"<br/>";
+        let msg_str = finish_speed_ms + "<br/>";
+        let timefmt = DurationFormatter.create('{HH}:{mm}:{ss}', UnitType.SECOND, '--:--:--');
+        let t = timefmt(parseInt(SimVar.GetSimVarValue("E:LOCAL TIME","seconds")))+"<br/>";
         msg_str += wp.name+"<br/>";
-        msg_str += "SEE TASK PAGE.";
         // this.task_message(msg_str, 10); // Display start message for 3 seconds
         this.popalert(hl,msg_str,5,"#26783c");
     }
@@ -364,9 +502,9 @@ class AS9070 extends ASShared {
     message_task_finish_too_low(wp) {
         // Display finished too low message
         let hl = "BAD FINISH";
-        let msg_str = this.displayValue(this.vars.alt.value,"feet","alt") + this.units.alt.pref;
+        let msg_str = this.ALTITUDE_M.toFixed(0) + "m";
         msg_str += "<br/>&gt;&gt;&nbsp;TOO LOW&nbsp;&lt;&lt;";
-        msg_str += "<br/>MIN HEIGHT: " + this.displayValue(wp.min_alt_m,"m","alt") + this.units.alt.pref;
+        msg_str += "<br/>MIN HEIGHT: " + wp.min_alt_m.tofixed(0) + "m";
         // this.task_message(msg_str, 6, true); // Display start message for 5 seconds
         this.popalert(hl,msg_str,5,"#ff0000");
     }
@@ -374,9 +512,9 @@ class AS9070 extends ASShared {
     message_task_finish_too_high(wp) {
         // Display started too low message
         let hl = "BAD FINISH";
-        let msg_str = this.displayValue(this.vars.alt.value,"feet","alt") + this.units.speed.pref;
+        let msg_str = this.ALTITUDE_M.toFixed(0) + "m";
         msg_str += "<br/>&gt;&gt;&nbsp;TOO HIGH&nbsp;&lt;&lt;";
-        msg_str += "<br/>MAX HEIGHT: " + this.displayValue(wp.max_alt_m,"m","alt") + this.units.alt.pref;
+        msg_str += "<br/>MAX HEIGHT: " + wp.max_alt_m.tofixed(0) + "m";
         // this.task_message(msg_str, 6, true); // Display start message for 5 seconds
         this.popalert(hl,msg_str,5,"#ff0000");
     }

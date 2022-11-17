@@ -45,11 +45,11 @@
 }
 
 #glidericon #symbol {
-	width: 150px;
-	transform: translate(-75px,-75px) rotate(45deg);
+	width: 100px;
+	transform: translate(-50px,-50px) rotate(45deg);
 	fill: #000000;
 	stroke: #ffffff;
-	stroke-width: 5px;
+	stroke-width: 3px;
 }
 
 #glidericon #ac_hdg, #glidericon #ac_trk {
@@ -158,7 +158,7 @@
 	transform: rotate(180deg);
 	position: absolute;
 	left: 0;
-	top: -45px;
+	top: -48px;
 	width: 100%;
 	fill: #0d8b3c;
 }
@@ -172,7 +172,7 @@
 #hawkbar.negative svg {
 	transform: rotate(0deg);
 	top: auto;
-	bottom: -45px;
+	bottom: -48px;
 	fill: #cc0000;
 }
 
@@ -205,9 +205,58 @@
 	left: 0;
 	width: 100%;
 	z-index:10000;
-	font-size: 2.5rem;
+	font-size: 1.2rem;
 }
 
 #alert p {
-	font-size: 2rem;
+	font-size: 1em;
+}
+
+
+.datafields {
+	width: 100%;
+	height: 3em;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	z-index: 100;
+}
+
+.datafield {
+	display: flex;
+	flex-direction: column;
+	width: 25%;
+	height: 3em;
+	color: #fff;
+	padding: 0 var(--horizontalpadding) var(--verticalpadding) var(--horizontalpadding);
+}
+
+.datafield .label {
+	width: 100%;
+	text-align: center;
+	font-size: 0.7em;
+}
+
+.datafield .value {
+	align-self: baseline;
+	text-align:center;
+	position: relative; 
+	width: 100%;
+	overflow: hidden;
+}
+
+.datafield .number {
+	font-size: 1.5em;
+	line-height: 1em;
+}
+
+.datafield .unit {
+	font-size: 0.7em;
+}
+
+
+#task-wpt-name {
+	width: 65%;
+	white-space: nowrap;
+	overflow: hidden;
 }

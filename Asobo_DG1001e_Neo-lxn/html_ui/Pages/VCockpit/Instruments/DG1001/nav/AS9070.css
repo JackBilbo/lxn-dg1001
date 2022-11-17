@@ -453,6 +453,11 @@ p.subtext {
   align-content: center;
 }
 
+.subpage-row.taskinfo {
+  align-content: flex-start;
+  width: 100%;
+}
+
 .subpage-row > img {
   width: 30px;
 }

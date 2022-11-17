@@ -20994,6 +20994,7 @@ class ViewService {
         }
         this.openViews.push(viewEntry);
         this.activeViewEntrySub.set(viewEntry);
+        document.getElementById("Container").scrollIntoView();
         return view;
     }
     handleViewClosed(closedView) {
@@ -21816,6 +21817,7 @@ class ASShared extends BaseInstrument {
                 }
                 break;
         }
+
         this.previousScreenState = this.screenState;
     }
     onSoundEnd(soundEventId) {
@@ -30869,6 +30871,8 @@ class AirportPage1 extends GuiDialog {
             let speed = UnitType.KNOT.convertTo(v, UnitType.MPS);
             this.windspeed.set(speed.toFixed(1));
         });
+
+        LX.builddatafields();
     }
     updateDirecToData(gpsPosition, newFacility) {
         const newDistance = UnitType.GA_RADIAN.convertTo(newFacility.distance(gpsPosition.lat, gpsPosition.long), UnitType.KILOMETER);
@@ -30893,14 +30897,26 @@ class AirportPage1 extends GuiDialog {
     render() {
         return (FSComponent.buildComponent("div", { class: 'subpage' },
             FSComponent.buildComponent("div", { class: 'subpage-top' },
-                FSComponent.buildComponent("div", { class: 'subpage-row' },
-                    FSComponent.buildComponent("img", { src: '/Pages/VCockpit/Instruments/Gliders/ASNAV/Shared/Assets/map/ICON_GLIDERS_SIGNAL.svg' }),
-                    FSComponent.buildComponent("div", null, this.differentialBearing),
-                    FSComponent.buildComponent("img", { src: '/Pages/VCockpit/Instruments/Gliders/ASNAV/Shared/Assets/map/ICON_GLIDERS_BATTERY.svg' })),
+                FSComponent.buildComponent("div", { class: 'subpage-row taskinfo' },
+                    FSComponent.buildComponent("div", { id: 'task-wpt-name' }),
+                    FSComponent.buildComponent("div", { id: 'course-pointer'}, ),
+                    FSComponent.buildComponent("div", { id: 'task-timer' })),
                 FSComponent.buildComponent("div", { class: 'subpage-row' },
                     "Apt: ",
-                    this.airportName)),
+                    this.airportName),
+                FSComponent.buildComponent("div", { class: 'datafields', id: 'data-apt-top'},
+                    FSComponent.buildComponent("div", { class: 'datafield', id: 'cell_0_1'}),
+                    FSComponent.buildComponent("div", { class: 'datafield', id: 'cell_0_2'}),
+                    FSComponent.buildComponent("div", { class: 'datafield', id: 'cell_0_3'}),
+                    FSComponent.buildComponent("div", { class: 'datafield', id: 'cell_0_4'}),
+                    )),
             FSComponent.buildComponent("div", { class: 'subpage-bottom' },
+                FSComponent.buildComponent("div", { class: 'datafields', id: 'data-apt-bottom'},
+                    FSComponent.buildComponent("div", { class: 'datafield', id: 'cell_0_5'}),
+                    FSComponent.buildComponent("div", { class: 'datafield', id: 'cell_0_6'}),
+                    FSComponent.buildComponent("div", { class: 'datafield', id: 'cell_0_7'}),
+                    FSComponent.buildComponent("div", { class: 'datafield', id: 'cell_0_8'}),
+                    ),
                 FSComponent.buildComponent("div", { class: 'subpage-row' },
                     FSComponent.buildComponent("div", null, "Wind"),
                     FSComponent.buildComponent("div", null, "Dis"),
