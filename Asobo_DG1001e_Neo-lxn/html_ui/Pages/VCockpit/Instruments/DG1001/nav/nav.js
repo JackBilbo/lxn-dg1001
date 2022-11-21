@@ -225,13 +225,6 @@ class AS9070 extends ASShared {
             document.querySelector("#cell_0_6 .number").innerText = v.toFixed(0);
             document.querySelector("#cell_0_6 .unit").innerText = "kmh";
         })
-
-        const stf_gr = this.bus.getSubscriber();
-        stf_gr.on('speed_to_fly_glide_ratio').atFrequency(1).handle((v) => {
-            document.querySelector("#cell_0_7 .label").innerText = "STF GR";
-            document.querySelector("#cell_0_7 .number").innerText = v.toFixed(0);
-            document.querySelector("#cell_0_7 .unit").innerText = ""; 
-        })
   
         const task_arr = this.bus.getSubscriber();
         task_arr.on('b21_arr_height_agl').atFrequency(1).handle((v) => {
@@ -258,6 +251,10 @@ class AS9070 extends ASShared {
             document.querySelector("#cell_0_4 .label").innerText = "WP ARR AGL";
             document.querySelector("#cell_0_4 .number").innerText = (B21_SOARING_ENGINE.current_wp().arrival_height_msl_m - B21_SOARING_ENGINE.current_wp().alt_m).toFixed(0);
             document.querySelector("#cell_0_4 .unit").innerText = "m"; 
+
+            document.querySelector("#cell_0_7 .label").innerText = "TASK AVG";
+            document.querySelector("#cell_0_7 .number").innerText = (B21_SOARING_ENGINE.task_finished() ? B21_SOARING_ENGINE.finish_speed_ms() * 3.6 : B21_SOARING_ENGINE.task.avg_task_speed_kts() * 1.852).toFixed(0);
+            document.querySelector("#cell_0_7 .unit").innerText = "kmh"; 
 
             document.querySelector("#cell_0_8 .label").innerText = "FINISH";
             document.querySelector("#cell_0_8 .number").innerText =  (B21_SOARING_ENGINE.task.finish_wp().arrival_height_msl_m - (B21_SOARING_ENGINE.task.finish_wp().min_alt_m != null ? B21_SOARING_ENGINE.task.finish_wp().min_alt_m : B21_SOARING_ENGINE.task.finish_wp().alt_m)).toFixed(0);
