@@ -1,6 +1,10 @@
 ﻿# lxn-dg1001
 A small enhancement mod for the Asobo DG1001 Neo nav computer.
 
+Update:
+
+Task average Speed is displayed in bottom row datafields.
+
 <h2>Installation:</h2>
 Extract the zip to a temporary location and copy the included folder "Asobo_DG1001e_Neo-lxn" to your community folder. To uninstall delete the folder and you're "back to normal".
 
